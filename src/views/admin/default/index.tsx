@@ -14,6 +14,8 @@ import { tableData, eventTableData } from "./variables/tableData";
 import EventsSellingTable from "./components/EventsSellingTable";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import OrdersRequests from "./components/OrdersRequests";
+import OrdersStatus from "./components/OrdersStatus";
 export default function UserReports() {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -53,33 +55,6 @@ export default function UserReports() {
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
-        <TotalSpent />
-        <Card mb={{ base: "0px", "2xl": "20px" }}>
-          <Text
-            color={textColorPrimary}
-            fontWeight="bold"
-            fontSize="2xl"
-            mt="10px"
-            mb="4px"
-          >
-            Notices
-          </Text>
-
-          <Project
-            live={true}
-            boxShadow={cardShadow}
-            eventsNumber={"13"}
-            mb="20px"
-          />
-          <Project
-            live={false}
-            boxShadow={cardShadow}
-            eventsNumber={"13"}
-            mb="20px"
-          />
-        </Card>
-      </SimpleGrid>
       <Flex
         align="center"
         gap={"10px"}
@@ -92,8 +67,25 @@ export default function UserReports() {
             frequencyofoccurane: String(r.Frequencyofoccurane),
             location: r.location,
           }))}
+        />{" "}
+        <OrdersRequests
+          tableData={rows?.map((r) => ({
+            description: r.description,
+            timeOfOccurrance: r.timeofoccurrance,
+            frequencyofoccurane: String(r.Frequencyofoccurane),
+            location: r.location,
+            id: r.id,
+          }))}
         />
-        <EventsSellingTable tableData={eventTableData} />
+        <OrdersStatus
+          tableData={rows?.map((r) => ({
+            description: r.description,
+            timeOfOccurrance: r.timeofoccurrance,
+            frequencyofoccurane: String(r.Frequencyofoccurane),
+            location: r.location,
+            id: r.id,
+          }))}
+        />
       </Flex>
     </Box>
   );

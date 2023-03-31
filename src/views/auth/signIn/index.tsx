@@ -84,7 +84,7 @@ function SignIn() {
         else setRule("ADMIN");
         //@ts-ignore
         console.log(data.is_admin);
-        // navigate("/admin/default");
+        navigate("/admin/default");
       });
   };
   return (
