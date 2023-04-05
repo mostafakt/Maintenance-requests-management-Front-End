@@ -18,6 +18,7 @@ import Store from "views/Store";
 import { AuthContextProvider } from "contexts/AuthContext";
 import PrivateRoute from "Routing/PrivateRoutes";
 import { MissingRoute } from "Routing/MissingRoute";
+import Customers from "views/admin/customers";
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
@@ -28,9 +29,10 @@ ReactDOM.render(
             <Route path={`/*`} element={<AuthLayout />} />
             <Route element={<PrivateRoute />}>
               <Route path={`/admin/*`} element={<AdminLayout />} />
-              <Route path={`/addEvent`} element={<AddEvent />} />
-              <Route path={`/store`} element={<Store />} />
             </Route>
+            <Route path={`/addEvent`} element={<AddEvent />} />
+            <Route path={`/store`} element={<Store />} />
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>

@@ -25,11 +25,11 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type RowObj = {
   id: number;
-  description: string;
+  name: string;
   timeOfOccurrance: string;
   frequencyofoccurane: string;
   location: string;
@@ -38,9 +38,9 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
+export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     console.log(tableData);
     setData(() => [...tableData]);
@@ -53,8 +53,8 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
   const rejectButton = useColorModeValue("red.500", "whiteAlpha.100");
   // let defaultData = tableData;
   const columns = [
-    columnHelper.accessor("description", {
-      id: "description",
+    columnHelper.accessor("id", {
+      id: "id",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -62,13 +62,13 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          description
+          name
         </Text>
       ),
       cell: (info: any) => (
         <Flex align="center">
           <Text color={textColor} fontSize="sm" fontWeight="700">
-            {info.getValue()}
+            <Link to={"/admin/customer/" + `${info.getValue()}`}>sss</Link>
           </Text>
         </Flex>
       ),
@@ -173,7 +173,7 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Orders Status
+          Customers Table
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>

@@ -28,7 +28,19 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { getToken, setRule, setToken } from "services/authManager";
-
+type loginResponce = {
+  access_token: string;
+  refresh_token: string;
+  user: {
+    pk: string;
+    role: string;
+    username: string;
+  };
+  email: string;
+  pk: string;
+  role: string;
+  username: string;
+};
 function SignIn() {
   const { action, email: userEmail } = useContext(AuthContext);
   // Chakra color mode
@@ -61,11 +73,11 @@ function SignIn() {
     // navigate("/admin/default");
 
     const res = await axios
-      .post(
-        "http://127.0.0.1:8000/token/",
+      .post<loginResponce>(
+        process.env.REACT_APP_BACK_END_API_LINK + "login/",
         {
-          username: email, //"mostafaktt",
-          password: password, //"12345678mos",
+          email: email,
+          password: password,
         },
         {
           headers: {
@@ -74,16 +86,15 @@ function SignIn() {
         }
       )
       .then((res) => {
-        setToken(res.data.access);
-        console.log(jwtDecode(res.data.access));
-        const data = jwtDecode(res.data.access);
+        setToken(res.data.access_token);
+        console.log(jwtDecode(res.data.access_token));
         //@ts-ignore
-        if (data.is_techincal) setRule("TECHNICAL");
+        if (res.data.role === "TECHNICAL") setRule("TECHNICAL");
         //@ts-ignore
-        else if (data.is_customer) setRule("CUSTOMER");
+        else if (res.data.role === "CUSTOMER") setRule("CUSTOMER");
         else setRule("ADMIN");
         //@ts-ignore
-        console.log(data.is_admin);
+
         navigate("/admin/default");
       });
   };
@@ -136,14 +147,14 @@ function SignIn() {
               color={textColor}
               mb="8px"
             >
-              UserName <Text color={brandStars}>*</Text>
+              Email <Text color={brandStars}>*</Text>
             </FormLabel>
             <Input
               isRequired={true}
               variant="auth"
               fontSize="sm"
               ms={{ base: "0px", md: "0px" }}
-              type="text"
+              type="email"
               placeholder="mail@simmmple.com"
               mb="24px"
               fontWeight="500"

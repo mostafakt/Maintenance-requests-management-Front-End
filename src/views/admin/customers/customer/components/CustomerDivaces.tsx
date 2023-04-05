@@ -38,7 +38,11 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
+export default function CustomerDivaces({
+  tableData,
+}: {
+  tableData: RowObj[];
+}) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {
@@ -82,7 +86,7 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          start Time
+          Time of occurrance
         </Text>
       ),
       cell: (info) => (
@@ -91,7 +95,24 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-
+    columnHelper.accessor("frequencyofoccurane", {
+      id: "frequencyofoccurane",
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          FrequencyOf Occurane
+        </Text>
+      ),
+      cell: (info) => (
+        <Text color={textColor} fontSize="sm" fontWeight="700">
+          {info.getValue()}
+        </Text>
+      ),
+    }),
     columnHelper.accessor("location", {
       id: "location",
       header: () => (
@@ -119,31 +140,47 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Technical
+          Actions
         </Text>
       ),
       cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor("frequencyofoccurane", {
-      id: "frequencyofoccurane",
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: "10px", lg: "12px" }}
-          color="gray.400"
-        >
-          status
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
+        <Flex color={textColor} fontSize="sm" fontWeight="700">
+          <Flex direction={{ xl: "row", sm: "column" }} gap={"15px"}>
+            <Button
+              bg={acceptButton}
+              _hover={{ bg: "green.300" }}
+              _active={{ bg: "whiteAlpha.100" }}
+              mb={{ sm: "16px", xl: "24px" }}
+              color={"white"}
+              fontWeight="regular"
+              fontSize="sm"
+              minW="185px"
+              mx="auto"
+              onClick={() => {
+                alert("accepted");
+              }}
+            >
+              Accept and assign to technical
+            </Button>
+            <Button
+              bg={rejectButton}
+              _hover={{ bg: "red.300" }}
+              _active={{ bg: "whiteAlpha.100" }}
+              mb={{ sm: "16px", xl: "24px" }}
+              color={"white"}
+              fontWeight="regular"
+              fontSize="sm"
+              minW="185px"
+              mx="auto"
+              onClick={() => {
+                alert("rejected");
+              }}
+            >
+              reject
+            </Button>
+            {info.getValue()}
+          </Flex>
+        </Flex>
       ),
     }),
   ];
@@ -173,7 +210,7 @@ export default function OrdersStatus({ tableData }: { tableData: RowObj[] }) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Orders Status
+         Customer Divaces
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>

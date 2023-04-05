@@ -8,6 +8,10 @@ import SignInCentered from "views/auth/signIn";
 import { Events } from "views/admin/events";
 import Orders from "views/admin/orders";
 import { EventPages } from "views/admin/eventPages";
+import Customers from "views/admin/customers";
+import Customer from "views/admin/customers/customer/Customer";
+import Technicals from "views/admin/Technicals/Technicals";
+import Technical from "views/admin/Technicals/Technical/Technical";
 
 const routes = [
   {
@@ -18,13 +22,13 @@ const routes = [
     component: <MainDashboard />,
   },
 
-  {
-    name: "Events",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: "/events",
-    component: <Events />,
-  },
+  // {
+  //   name: "Events",
+  //   layout: "/admin",
+  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+  //   path: "/events",
+  //   component: <Events />,
+  // },
   // {
   //   name: "tables",
   //   layout: "/admin",
@@ -39,21 +43,42 @@ const routes = [
   //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
   //   component: Profile,
   // },
+  // {
+  //   name: "Orders",
+  //   layout: "/admin",
+  //   path: "/orders",
+  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+  //   component: <Orders />,
+  // },
   {
-    name: "Orders",
+    name: "Customers",
     layout: "/admin",
-    path: "/orders",
+    path: "/customers",
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    component: <Orders />,
+    component: <Customers />,
   },
-
+  {
+    name: "Technicals",
+    layout: "/admin",
+    path: "/technicals",
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    component: <Technicals />,
+  },
   {
     sideBar: true,
-    name: "Event Pages",
+    name: "Technicals",
     layout: "/admin",
-    path: "/eventDes/*",
+    path: "/technicals/:id",
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    component: <EventPages />,
+    component: <Technical />,
+  },
+  {
+    sideBar: true,
+    name: "Customer",
+    layout: "/admin",
+    path: "/Customer/:id",
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    component: <Customer />,
   },
   {
     name: "Sign In",
