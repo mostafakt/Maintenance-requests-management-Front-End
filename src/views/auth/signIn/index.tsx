@@ -27,7 +27,13 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { getToken, setRule, setToken } from "services/authManager";
+import {
+  getToken,
+  setExpiresIn,
+  setRule,
+  setToken,
+  setUser,
+} from "services/authManager";
 type loginResponce = {
   access_token: string;
   refresh_token: string;
@@ -69,12 +75,11 @@ function SignIn() {
   }, [userEmail]);
 
   const handelLogin = async () => {
-    action.login({ email: email, rule: 1 });
     // navigate("/admin/default");
 
     const res = await axios
       .post<loginResponce>(
-        process.env.REACT_APP_BACK_END_API_LINK + "login/",
+        process.env.REACT_APP_BACK_END_API_LINK + "user/login/",
         {
           email: email,
           password: password,
@@ -86,16 +91,26 @@ function SignIn() {
         }
       )
       .then((res) => {
+        action.login({ id: res.data.user.pk, email: email, rule: 1, file: "" });
+        // setExpiresIn(res.data);
         setToken(res.data.access_token);
-        console.log(jwtDecode(res.data.access_token));
         //@ts-ignore
-        if (res.data.role === "TECHNICAL") setRule("TECHNICAL");
+        setExpiresIn(jwtDecode(res.data.access_token).exp);
+        console.log(res.data.user.role + "----------------------------");
         //@ts-ignore
-        else if (res.data.role === "CUSTOMER") setRule("CUSTOMER");
-        else setRule("ADMIN");
+        setUser(res.data.user.pk);
+        if (res.data.user.role === "TECHNICAL") {
+          setRule("TECHNICAL");
+          navigate("/admin/default");
+        }
         //@ts-ignore
-
-        navigate("/admin/default");
+        else if (res.data.user.role === "CLIENT") {
+          setRule("CLIENT");
+          navigate("/client/default");
+        } else {
+          setRule("ADMIN");
+          navigate("/admin/default");
+        }
       });
   };
   return (

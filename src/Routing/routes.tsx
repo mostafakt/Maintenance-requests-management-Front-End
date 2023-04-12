@@ -5,7 +5,7 @@ import { MdBarChart, MdHome, MdLock } from "react-icons/md";
 import MainDashboard from "views/admin/default";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
-import { Events } from "views/admin/events";
+import { AddEvent } from "views/admin/addevent";
 import Orders from "views/admin/orders";
 import { EventPages } from "views/admin/eventPages";
 import Customers from "views/admin/customers";
@@ -22,13 +22,13 @@ const routes = [
     component: <MainDashboard />,
   },
 
-  // {
-  //   name: "Events",
-  //   layout: "/admin",
-  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-  //   path: "/events",
-  //   component: <Events />,
-  // },
+  {
+    name: "Events",
+    layout: "/admin",
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: "/events",
+    component: <AddEvent />,
+  },
   // {
   //   name: "tables",
   //   layout: "/admin",

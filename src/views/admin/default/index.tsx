@@ -6,7 +6,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// Assets
+// Assets ;
 import TotalSpent from "views/admin/default/components/TotalSpent";
 import Project from "./components/Project";
 import ColumnsTable from "./components/ColumnsTable";
@@ -16,6 +16,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import OrdersRequests from "./components/OrdersRequests";
 import OrdersStatus from "./components/OrdersStatus";
+import { devices, devicesType } from "./services/devicesServices";
+import DevidesList from "./components/DevidesList";
+import { getHeader } from "services/authManager";
 export default function UserReports() {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -23,6 +26,7 @@ export default function UserReports() {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+  const [devicesList, setDevicesList] = useState<devicesType>();
   const [rows, setRows] = useState<
     {
       id: number;
@@ -42,6 +46,18 @@ export default function UserReports() {
       RequriedVisit: "",
     },
   ]);
+  const devices = async (SetData: (val: devicesType) => void) => {
+    await axios
+      .get(process.env.REACT_APP_BACK_END_API_LINK + "devices/", {
+        headers: getHeader(),
+      })
+      .then((val) => {
+        SetData(val.data);
+      });
+  };
+  useEffect(() => {
+    devices(setDevicesList);
+  }, []);
   const fetchTableData = async () => {
     await axios.get("http://127.0.0.1:8000/routerorders/").then((r) => {
       //@ts-ignore
@@ -86,6 +102,7 @@ export default function UserReports() {
             id: r.id,
           }))}
         />
+        <DevidesList tableData={devicesList?.results?.map((r) => r) || []} />
       </Flex>
     </Box>
   );

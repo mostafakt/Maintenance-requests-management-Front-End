@@ -20,7 +20,7 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
-    console.log(location.pathname + "     " + routeName);
+    // console.log(location.pathname + "     " + routeName);
     return location.pathname.includes(routeName);
   };
 
@@ -29,6 +29,8 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
     return routes.map((route: RoutesType, index: number) => {
       if (
         (route.layout === "/admin" ||
+          route.layout === "/client" ||
+          route.layout === "/technical" ||
           route.layout === "/auth" ||
           route.layout === "/rtl") &&
         !route.sideBar

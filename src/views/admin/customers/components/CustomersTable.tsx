@@ -42,7 +42,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
   const navigate = useNavigate();
   React.useEffect(() => {
-    console.log(tableData);
+    // console.log(tableData);
     setData(() => [...tableData]);
   }, [tableData]);
 

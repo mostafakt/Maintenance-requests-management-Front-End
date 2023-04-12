@@ -42,7 +42,7 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {
-    console.log(tableData);
+    // console.log(tableData);
     setData(() => [...tableData]);
   }, [tableData]);
 

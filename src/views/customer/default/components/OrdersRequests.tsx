@@ -38,15 +38,11 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function CustomerDivaces({
-  tableData,
-}: {
-  tableData: RowObj[];
-}) {
+export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {
-    // console.log(tableData);
+    console.log(tableData);
     setData(() => [...tableData]);
   }, [tableData]);
 
@@ -210,7 +206,7 @@ export default function CustomerDivaces({
           fontWeight="700"
           lineHeight="100%"
         >
-         Customer Divaces
+          Orders Requests
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>

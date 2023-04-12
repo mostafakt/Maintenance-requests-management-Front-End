@@ -4,8 +4,8 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { getRule, isLoggedIn } from "services/authManager";
 
-const PrivateRoute = () => {
-  const auth = isLoggedIn() && getRule() == "ADMIN";
+const PrivateRoute = ({ rule }: { rule: string }) => {
+  const auth = isLoggedIn() && getRule() == rule;
   const location = useLocation();
 
   if (!auth) {

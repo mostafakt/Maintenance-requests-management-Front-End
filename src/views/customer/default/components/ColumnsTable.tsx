@@ -28,7 +28,6 @@ import Menu from "components/menu/MainMenu";
 import { Link } from "react-router-dom";
 
 type RowObj = {
-  id: number;
   description: string;
   timeOfOccurrance: string;
   frequencyofoccurane: string;
@@ -38,23 +37,17 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function CustomerDivaces({
-  tableData,
-}: {
-  tableData: RowObj[];
-}) {
+export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {
-    // console.log(tableData);
+    console.log(tableData);
     setData(() => [...tableData]);
   }, [tableData]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
-  const acceptButton = useColorModeValue("green.500", "whiteAlpha.100");
-  const rejectButton = useColorModeValue("red.500", "whiteAlpha.100");
   // let defaultData = tableData;
   const columns = [
     columnHelper.accessor("description", {
@@ -131,58 +124,6 @@ export default function CustomerDivaces({
         </Text>
       ),
     }),
-    columnHelper.accessor("id", {
-      id: "id",
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: "10px", lg: "12px" }}
-          color="gray.400"
-        >
-          Actions
-        </Text>
-      ),
-      cell: (info) => (
-        <Flex color={textColor} fontSize="sm" fontWeight="700">
-          <Flex direction={{ xl: "row", sm: "column" }} gap={"15px"}>
-            <Button
-              bg={acceptButton}
-              _hover={{ bg: "green.300" }}
-              _active={{ bg: "whiteAlpha.100" }}
-              mb={{ sm: "16px", xl: "24px" }}
-              color={"white"}
-              fontWeight="regular"
-              fontSize="sm"
-              minW="185px"
-              mx="auto"
-              onClick={() => {
-                alert("accepted");
-              }}
-            >
-              Accept and assign to technical
-            </Button>
-            <Button
-              bg={rejectButton}
-              _hover={{ bg: "red.300" }}
-              _active={{ bg: "whiteAlpha.100" }}
-              mb={{ sm: "16px", xl: "24px" }}
-              color={"white"}
-              fontWeight="regular"
-              fontSize="sm"
-              minW="185px"
-              mx="auto"
-              onClick={() => {
-                alert("rejected");
-              }}
-            >
-              reject
-            </Button>
-            {info.getValue()}
-          </Flex>
-        </Flex>
-      ),
-    }),
   ];
   const table = useReactTable({
     data,
@@ -210,7 +151,7 @@ export default function CustomerDivaces({
           fontWeight="700"
           lineHeight="100%"
         >
-         Customer Divaces
+          Your orders
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>
