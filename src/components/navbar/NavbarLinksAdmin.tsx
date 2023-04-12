@@ -102,7 +102,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
         </Text>
       </Flex>
       <SidebarResponsive routes={routes} />
-      <Link to={"/store"}>
+      {/* <Link to={"/store"}>
         <Button
           variant="no-hover"
           bg="blue.500"
@@ -122,7 +122,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           />
           View Store
         </Button>
-      </Link>
+      </Link> */}
       <Button
         variant="no-hover"
         bg="transparent"

@@ -19,6 +19,10 @@ import OrdersStatus from "./components/OrdersStatus";
 import { devices, devicesType } from "./services/devicesServices";
 import DevidesList from "./components/DevidesList";
 import { getHeader } from "services/authManager";
+import {
+  recentOrdersList,
+  recentOrders,
+} from "./services/recentOrdersServices";
 export default function UserReports() {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -27,6 +31,8 @@ export default function UserReports() {
     "unset"
   );
   const [devicesList, setDevicesList] = useState<devicesType>();
+  const [recentOrdersData, setRecentOrdersData] = useState<recentOrdersList>();
+
   const [rows, setRows] = useState<
     {
       id: number;
@@ -57,16 +63,7 @@ export default function UserReports() {
   };
   useEffect(() => {
     devices(setDevicesList);
-  }, []);
-  const fetchTableData = async () => {
-    await axios.get("http://127.0.0.1:8000/routerorders/").then((r) => {
-      //@ts-ignore
-      setRows(r.data);
-    });
-    // console.log(data);
-  };
-  useEffect(() => {
-    fetchTableData();
+    recentOrders(setRecentOrdersData);
   }, []);
 
   return (
@@ -77,12 +74,18 @@ export default function UserReports() {
         direction={{ base: "column", md: "column" }}
       >
         <ColumnsTable
-          tableData={rows?.map((r) => ({
-            description: r.description,
-            timeOfOccurrance: r.timeofoccurrance,
-            frequencyofoccurane: String(r.Frequencyofoccurane),
-            location: r.location,
-          }))}
+          tableData={
+            recentOrdersData?.results.map((r) => ({
+              title: r.title,
+              state: r.state,
+              description: r.description,
+              client: r.client,
+              device: r.device,
+              order_number: r.order_number,
+              order_contact: r.order_contact,
+              technical: r.technical,
+            })) || []
+          }
         />{" "}
         <OrdersRequests
           tableData={rows?.map((r) => ({
