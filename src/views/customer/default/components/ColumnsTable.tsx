@@ -24,14 +24,17 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import { Link } from "react-router-dom";
 
 type RowObj = {
+  title: string;
+  state: string;
   description: string;
-  timeOfOccurrance: string;
-  frequencyofoccurane: string;
-  location: string;
+  orderContact: string[];
+  device: string;
+  order_number: string;
+  order_contact: string[];
+  technical: string[];
 };
 
 const columnHelper = createColumnHelper<RowObj>();
@@ -50,6 +53,26 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   // let defaultData = tableData;
   const columns = [
+    columnHelper.accessor("title", {
+      id: "title",
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          Title
+        </Text>
+      ),
+      cell: (info: any) => (
+        <Flex align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="700">
+            {info.getValue()}
+          </Text>
+        </Flex>
+      ),
+    }),
     columnHelper.accessor("description", {
       id: "description",
       header: () => (
@@ -70,8 +93,8 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
         </Flex>
       ),
     }),
-    columnHelper.accessor("timeOfOccurrance", {
-      id: "timeofoccurrance",
+    columnHelper.accessor("orderContact", {
+      id: "orderContact",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -79,7 +102,7 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Time of occurrance
+          Order Contact
         </Text>
       ),
       cell: (info) => (
@@ -88,8 +111,8 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("frequencyofoccurane", {
-      id: "frequencyofoccurane",
+    columnHelper.accessor("device", {
+      id: "device",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -97,7 +120,7 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          FrequencyOf Occurane
+          Device
         </Text>
       ),
       cell: (info) => (
@@ -106,8 +129,8 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("location", {
-      id: "location",
+    columnHelper.accessor("state", {
+      id: "state",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -115,7 +138,25 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          location
+          State
+        </Text>
+      ),
+      cell: (info) => (
+        <Text color={textColor} fontSize="sm" fontWeight="700">
+          {info.getValue()}
+        </Text>
+      ),
+    }),
+    columnHelper.accessor("technical", {
+      id: "technical",
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          Technical
         </Text>
       ),
       cell: (info) => (
@@ -151,7 +192,7 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Your orders
+          Recent Orders
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>

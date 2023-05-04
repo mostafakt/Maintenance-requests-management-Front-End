@@ -3,27 +3,15 @@ import axios from "axios";
 import Card from "components/card/Card";
 import React, { useState } from "react";
 import CustomersTable from "./components/CustomersTable";
+import { useEffect } from "react";
+import { clientsList, clientsListType } from "./services/clientsServices";
 
 const Customers = () => {
-  const [rows, setRows] = useState<
-    {
-      id: number;
-      name: string;
-      timeofoccurrance: string;
-      Frequencyofoccurane: number;
-      RequriedVisit: string;
-      location: string;
-    }[]
-  >([
-    {
-      name: "mostafa",
-      Frequencyofoccurane: 0,
-      timeofoccurrance: "",
-      location: "r.location,",
-      id: 1,
-      RequriedVisit: "",
-    },
-  ]);
+  const [clintsListData, setClientsListData] = useState<clientsListType>();
+  useEffect(() => {
+    clientsList(setClientsListData);
+  }, []);
+
   const textColorSecondary = useColorModeValue("black", "white");
   const boxBg = useColorModeValue("white", "whiteAlpha.200");
   const greenBotton = useColorModeValue("green.300", "green.400");
@@ -65,13 +53,7 @@ const Customers = () => {
       </Flex>
 
       <CustomersTable
-        tableData={rows?.map((r) => ({
-          name: r.name,
-          timeOfOccurrance: r.timeofoccurrance,
-          frequencyofoccurane: String(r.Frequencyofoccurane),
-          location: r.location,
-          id: r.id,
-        }))}
+        tableData={clintsListData?.results?.map((r) => r) || []}
       />
       {/* <ColumnTable tableData={tableData} /> */}
     </Flex>

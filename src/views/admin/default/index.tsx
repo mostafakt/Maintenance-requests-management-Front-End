@@ -79,11 +79,11 @@ export default function UserReports() {
               title: r.title,
               state: r.state,
               description: r.description,
-              client: r.client,
-              device: r.device,
+              client: r.client.name,
+              device: r.device.name,
               order_number: r.order_number,
               order_contact: r.order_contact,
-              technical: r.technical,
+              technical: r.technical.map((t) => t.name),
             })) || []
           }
         />{" "}

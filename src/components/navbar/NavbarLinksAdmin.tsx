@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Icon,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -14,28 +13,25 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 // Custom Components
-import { ItemContent } from "components/menu/ItemContent";
 import { SearchBar } from "components/navbar/searchBar/SearchBar";
 import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
 import React, { useContext } from "react";
 // Assets
-import navImage from "assets/img/layout/Navbar.png";
-import { MdNotificationsNone, MdInfoOutline } from "react-icons/md";
 import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { FaEthereum } from "react-icons/fa";
 import routes from "Routing/routes";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
+import { setToken } from "services/authManager";
 export default function HeaderLinks(props: { secondary: boolean }) {
+  const navigate = useNavigate();
   const { secondary } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   // Chakra Color Mode
   const navbarIcon = useColorModeValue("gray.400", "white");
   let menuBg = useColorModeValue("white", "navy.800");
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const textColorBrand = useColorModeValue("brand.700", "brand.400");
   const ethColor = useColorModeValue("gray.700", "white");
   const borderColor = useColorModeValue("#E6ECFA", "rgba(135, 140, 189, 0.3)");
   const ethBg = useColorModeValue("secondaryGray.300", "navy.900");
@@ -44,7 +40,6 @@ export default function HeaderLinks(props: { secondary: boolean }) {
     "14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
     "14px 17px 40px 4px rgba(112, 144, 176, 0.06)"
   );
-  const borderButton = useColorModeValue("secondaryGray.500", "whiteAlpha.200");
   const { email } = useContext(AuthContext);
   return (
     <Flex
@@ -182,6 +177,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               _focus={{ bg: "none" }}
               borderRadius="8px"
               px="14px"
+              onClick={() => navigate("/client/profile")}
             >
               <Text fontSize="sm">Profile Settings</Text>
             </MenuItem>
@@ -199,6 +195,10 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               color="red.400"
               borderRadius="8px"
               px="14px"
+              onClick={() => {
+                setToken(null);
+                navigate("/");
+              }}
             >
               <Text fontSize="sm">Log out</Text>
             </MenuItem>

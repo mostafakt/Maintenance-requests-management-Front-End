@@ -28,10 +28,10 @@ import Menu from "components/menu/MainMenu";
 import { Link } from "react-router-dom";
 
 type RowObj = {
-  orderRef: string;
-  ticketHolder: string;
-  purchased: string;
-  status: string;
+  identity_image: string;
+  domain: string;
+  phone_number: string;
+  address: string;
 };
 
 const columnHelper = createColumnHelper<RowObj>();
@@ -44,8 +44,8 @@ export default function TechnicalsTable(props: { tableData: any }) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   let defaultData = tableData;
   const columns = [
-    columnHelper.accessor("orderRef", {
-      id: "orderRef",
+    columnHelper.accessor("domain", {
+      id: "domain",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -53,7 +53,7 @@ export default function TechnicalsTable(props: { tableData: any }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Order Ref
+          Domain
         </Text>
       ),
       cell: (info: any) => (
@@ -64,8 +64,8 @@ export default function TechnicalsTable(props: { tableData: any }) {
         </Flex>
       ),
     }),
-    columnHelper.accessor("ticketHolder", {
-      id: "ticketHolder",
+    columnHelper.accessor("phone_number", {
+      id: "phone_number",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -73,7 +73,7 @@ export default function TechnicalsTable(props: { tableData: any }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          TicketHolder
+          Phone number
         </Text>
       ),
       cell: (info) => (
@@ -82,8 +82,8 @@ export default function TechnicalsTable(props: { tableData: any }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("purchased", {
-      id: "purchased",
+    columnHelper.accessor("address", {
+      id: "address",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -91,25 +91,7 @@ export default function TechnicalsTable(props: { tableData: any }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Purchased
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor("status", {
-      id: "status",
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: "10px", lg: "12px" }}
-          color="gray.400"
-        >
-          status
+          address
         </Text>
       ),
       cell: (info) => (

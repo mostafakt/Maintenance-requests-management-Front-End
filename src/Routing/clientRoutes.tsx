@@ -1,6 +1,8 @@
 import { Icon } from "@chakra-ui/react";
 import { MdHome } from "react-icons/md";
 import { AddDevice } from "views/customer/addDevice";
+import { CreateOrder } from "views/customer/addOrder";
+import { CreateOrderContact } from "views/customer/addOrderContct";
 
 // Admin Imports
 import MainDashboard from "views/customer/default";
@@ -15,29 +17,45 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <MainDashboard />,
   },
+  // {
+  //   // sideBar: true,
+  //   name: "ordees",
+  //   layout: "/client",
+  //   path: "/orders",
+  //   icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+  //   component: <>dasda</>,
+  // },
   {
     // sideBar: true,
-    name: "ordees",
+    name: "Create new order",
     layout: "/client",
-    path: "/orders",
+    path: "/CreateOrder",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <>dasda</>,
+    component: <CreateOrder />,
   },
   {
     // sideBar: true,
-    name: "add device",
+    name: "Add new  device",
     layout: "/client",
     path: "/devices",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <AddDevice />,
   },
   {
-    // sideBar: true,
+    sideBar: true,
     name: "user profile",
     layout: "/client",
     path: "/profile",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <Profile />,
+  },
+  {
+    // sideBar: true,
+    name: "Create new Order Contact",
+    layout: "/client",
+    path: "/orderContat",
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <CreateOrderContact />,
   },
 ];
 

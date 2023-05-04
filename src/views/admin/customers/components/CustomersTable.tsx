@@ -28,11 +28,17 @@ import Menu from "components/menu/MainMenu";
 import { Link, useNavigate } from "react-router-dom";
 
 type RowObj = {
-  id: number;
-  name: string;
-  timeOfOccurrance: string;
-  frequencyofoccurane: string;
-  location: string;
+  company_name: string;
+  manager: string;
+  technical_manger: string;
+  address: string;
+  phone_number: string;
+  manager_mobile: string;
+  email: string;
+  website: string;
+  facebook: string;
+  serial_number: string;
+  logo: string;
 };
 
 const columnHelper = createColumnHelper<RowObj>();
@@ -53,8 +59,8 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
   const rejectButton = useColorModeValue("red.500", "whiteAlpha.100");
   // let defaultData = tableData;
   const columns = [
-    columnHelper.accessor("id", {
-      id: "id",
+    columnHelper.accessor("company_name", {
+      id: "company_name",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -62,7 +68,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          name
+          Company name
         </Text>
       ),
       cell: (info: any) => (
@@ -73,8 +79,8 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
         </Flex>
       ),
     }),
-    columnHelper.accessor("timeOfOccurrance", {
-      id: "timeofoccurrance",
+    columnHelper.accessor("phone_number", {
+      id: "phone_number",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -82,7 +88,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          start Time
+          Phone number
         </Text>
       ),
       cell: (info) => (
@@ -92,8 +98,8 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
       ),
     }),
 
-    columnHelper.accessor("location", {
-      id: "location",
+    columnHelper.accessor("email", {
+      id: "email",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -101,7 +107,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          location
+          Email
         </Text>
       ),
       cell: (info) => (
@@ -110,8 +116,8 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("id", {
-      id: "id",
+    columnHelper.accessor("website", {
+      id: "website",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -119,7 +125,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Technical
+          Website
         </Text>
       ),
       cell: (info) => (
@@ -128,8 +134,8 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("frequencyofoccurane", {
-      id: "frequencyofoccurane",
+    columnHelper.accessor("serial_number", {
+      id: "serial_number",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -137,7 +143,7 @@ export default function CustomersTable({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          status
+          Serial number
         </Text>
       ),
       cell: (info) => (

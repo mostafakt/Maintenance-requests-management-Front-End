@@ -33,7 +33,7 @@ type RowObj = {
   client: string;
   device: string;
   order_number: string;
-  order_contact: string;
+  order_contact: string[];
   technical: string[];
 };
 

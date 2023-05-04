@@ -45,6 +45,7 @@ function Profile() {
     work_rate: "string",
     device_images: [],
   });
+  const [disabled, setDisabled] = useState(true);
   const formData = new FormData();
 
   const onSubmit = async () => {
@@ -59,9 +60,13 @@ function Profile() {
     <>
       <Box pt={{ base: "50px", md: "0px" }} mt={{ xl: "70px" }}>
         <Card mb={{ base: "0px", "2xl": "20px" }}>
-          <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
-            Your profile information :
-          </Text>
+          <Flex justifyContent={"space-between"}>
+            <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
+              Your profile information :
+            </Text>
+
+            <Button onClick={() => setDisabled(!disabled)}>Edit</Button>
+          </Flex>
           <FormControl>
             <Flex direction={{ sm: "column", xl: "row" }} gap="15px">
               <FormControl>
@@ -76,6 +81,7 @@ function Profile() {
                   email<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.email}
                   onChange={(e) => {
                     setUserDat({
@@ -132,6 +138,7 @@ function Profile() {
                   company_name<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.company_name}
                   onChange={(e) => {
                     setUserDat({
@@ -162,6 +169,7 @@ function Profile() {
                   facebook<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.facebook}
                   onChange={(e) => {
                     setUserDat({
@@ -190,6 +198,7 @@ function Profile() {
                   manager<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.manager}
                   onChange={(e) => {
                     setUserDat({
@@ -218,6 +227,7 @@ function Profile() {
                   phone number<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.phone_number}
                   onChange={(e) => {
                     setUserDat({
@@ -248,6 +258,7 @@ function Profile() {
                   serial number<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.serial_number}
                   onChange={(e) => {
                     setUserDat({
@@ -276,6 +287,7 @@ function Profile() {
                   technical manger<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.technical_manger}
                   onChange={(e) => {
                     setUserDat({
@@ -304,6 +316,7 @@ function Profile() {
                   website<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.website}
                   onChange={(e) => {
                     setUserDat({
@@ -334,6 +347,7 @@ function Profile() {
                   manager mobile<Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Input
+                  disabled={disabled}
                   value={userData?.manager_mobile}
                   onChange={(e) => {
                     setUserDat({
@@ -393,6 +407,7 @@ function Profile() {
               </Text>
             </Card>
             <Button
+              disabled={disabled}
               fontSize="sm"
               variant="brand"
               fontWeight="500"

@@ -10,15 +10,23 @@ export type recentOrdersList = {
     title: string;
     state: string;
     description: string;
-    client: string;
-    device: string;
+    client: {
+      id: string;
+      name: string;
+    };
+    device: {
+      id: string;
+      name: string;
+    };
     order_number: string;
-    order_contact: string;
-    technical: string[];
+    technical: {
+      id: string;
+      name: string;
+    }[];
+    order_contact: string[];
     problem_images: string[];
   }[];
 };
-
 export const recentOrders = async (
   SetData: (val: recentOrdersList) => void
 ) => {
