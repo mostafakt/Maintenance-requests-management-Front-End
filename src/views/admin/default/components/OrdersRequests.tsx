@@ -10,8 +10,16 @@ import {
   Tr,
   useColorModeValue,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import * as React from "react";
+// import Modal from "react-modal";
 
 import {
   createColumnHelper,
@@ -24,35 +32,93 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import { Link } from "react-router-dom";
+import {
+  getOrder,
+  getOrderType,
+  orderType,
+  updateOrderService,
+} from "../services/recentOrdersServices";
 
 type RowObj = {
-  id: number;
+  id: string;
+  title: string;
+  state: string;
   description: string;
-  timeOfOccurrance: string;
-  frequencyofoccurane: string;
-  location: string;
+  client: string;
+  device: string;
+  order_number: string;
+  order_contact: string[];
+  technical: string[];
 };
 
 const columnHelper = createColumnHelper<RowObj>();
-
+// Modal.setAppElement("#yourAppElement");
 // const columns = columnsDataCheck;
-export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
+function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
   const [data, setData] = React.useState(() => [...tableData]);
-
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
   React.useEffect(() => {
-    // console.log(tableData);
+    console.log(tableData);
     setData(() => [...tableData]);
   }, [tableData]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
   const acceptButton = useColorModeValue("green.500", "whiteAlpha.100");
   const rejectButton = useColorModeValue("red.500", "whiteAlpha.100");
   // let defaultData = tableData;
+  // let defaultData = tableData;
+  const [orderData, setOrderData] = React.useState<getOrderType>();
+  const [orderId, setOrderId] = React.useState("");
+  React.useEffect(() => {
+    getOrder(orderId, setOrderData);
+  }, [orderId]);
+  const rejectOrder = () => {
+    updateOrderService({
+      id: orderData?.id,
+      title: orderData?.title,
+      description: orderData?.description,
+      client: orderData?.client.id,
+      device: orderData?.device.id,
+      order_number: orderData?.order_number,
+      order_contact: orderData?.order_contact[0].id,
+      technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
+      problem_images: orderData?.problem_images,
+    });
+  };
   const columns = [
+    columnHelper.accessor("title", {
+      id: "title",
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          Title
+        </Text>
+      ),
+      cell: (info: any) => (
+        <Flex align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="700">
+            {info.getValue()}
+          </Text>
+        </Flex>
+      ),
+    }),
     columnHelper.accessor("description", {
       id: "description",
       header: () => (
@@ -73,8 +139,8 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
         </Flex>
       ),
     }),
-    columnHelper.accessor("timeOfOccurrance", {
-      id: "timeofoccurrance",
+    columnHelper.accessor("client", {
+      id: "client",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -82,7 +148,7 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          Time of occurrance
+          Client
         </Text>
       ),
       cell: (info) => (
@@ -91,8 +157,8 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("frequencyofoccurane", {
-      id: "frequencyofoccurane",
+    columnHelper.accessor("device", {
+      id: "device",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -100,7 +166,7 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          FrequencyOf Occurane
+          Device
         </Text>
       ),
       cell: (info) => (
@@ -109,8 +175,8 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
         </Text>
       ),
     }),
-    columnHelper.accessor("location", {
-      id: "location",
+    columnHelper.accessor("state", {
+      id: "state",
       header: () => (
         <Text
           justifyContent="space-between"
@@ -118,7 +184,7 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
           fontSize={{ sm: "10px", lg: "12px" }}
           color="gray.400"
         >
-          location
+          State
         </Text>
       ),
       cell: (info) => (
@@ -169,12 +235,13 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
               minW="185px"
               mx="auto"
               onClick={() => {
-                alert("rejected");
+                setOrderId(info.getValue());
+                rejectOrder();
               }}
             >
               reject
             </Button>
-            {info.getValue()}
+            {/* {info.getValue()} */}
           </Flex>
         </Flex>
       ),
@@ -198,6 +265,25 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
       px="0px"
       overflowX={{ sm: "scroll", lg: "hidden" }}
     >
+      <Modal
+        isCentered
+        onClose={() => {}}
+        isOpen={false}
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={() => {}}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex px="25px" mb="8px" justifyContent="space-between" align="center">
         <Text
           color={textColor}
@@ -206,7 +292,7 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Orders Requests
+          Recent Orders
         </Text>
         <Link to={"/admin/orders"}>
           <Button>View All Orders</Button>
@@ -279,3 +365,4 @@ export default function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
     </Card>
   );
 }
+export { OrdersRequests };

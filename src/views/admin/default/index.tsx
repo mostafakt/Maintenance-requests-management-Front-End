@@ -14,7 +14,6 @@ import { tableData, eventTableData } from "./variables/tableData";
 import EventsSellingTable from "./components/EventsSellingTable";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import OrdersRequests from "./components/OrdersRequests";
 import OrdersStatus from "./components/OrdersStatus";
 import { devices, devicesType } from "./services/devicesServices";
 import DevidesList from "./components/DevidesList";
@@ -23,6 +22,7 @@ import {
   recentOrdersList,
   recentOrders,
 } from "./services/recentOrdersServices";
+import { OrdersRequests } from "./components/OrdersRequests";
 export default function UserReports() {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -32,6 +32,8 @@ export default function UserReports() {
   );
   const [devicesList, setDevicesList] = useState<devicesType>();
   const [recentOrdersData, setRecentOrdersData] = useState<recentOrdersList>();
+  const [requestedOrdersData, setRequestedOrdersData] =
+    useState<recentOrdersList>();
 
   const [rows, setRows] = useState<
     {
@@ -64,6 +66,7 @@ export default function UserReports() {
   useEffect(() => {
     devices(setDevicesList);
     recentOrders(setRecentOrdersData);
+    recentOrders(setRequestedOrdersData, "INITIALIZED");
   }, []);
 
   return (
@@ -88,13 +91,19 @@ export default function UserReports() {
           }
         />{" "}
         <OrdersRequests
-          tableData={rows?.map((r) => ({
-            description: r.description,
-            timeOfOccurrance: r.timeofoccurrance,
-            frequencyofoccurane: String(r.Frequencyofoccurane),
-            location: r.location,
-            id: r.id,
-          }))}
+          tableData={
+            requestedOrdersData?.results.map((r) => ({
+              title: r.title,
+              state: r.state,
+              description: r.description,
+              client: r.client.name,
+              device: r.device.name,
+              order_number: r.order_number,
+              order_contact: r.order_contact,
+              technical: r.technical.map((t) => t.name),
+              id: r.id,
+            })) || []
+          }
         />
         <OrdersStatus
           tableData={rows?.map((r) => ({
