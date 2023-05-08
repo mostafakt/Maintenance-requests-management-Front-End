@@ -18,9 +18,21 @@ export type orderType = {
     id: string;
     name: string;
   }[];
-  order_contact: string[];
+  order_contact: {
+    id: string;
+    client: {
+      id: string;
+      name: string;
+    };
+    orders: string[];
+    contact_name: string;
+    availability_date: string;
+    visit_date: string;
+    location: string;
+  }[];
   problem_images: string[];
 };
+
 export type recentOrdersList = {
   count: number;
   next: string;
@@ -54,11 +66,35 @@ export type updateOrder = {
   order_contact: string;
   technical: string[];
   problem_images: string[];
+  state: string;
 };
 export const updateOrderService = async (data: updateOrder) => {
   const id = data.id;
   delete data["id"];
   await axios.put(
+    process.env.REACT_APP_BACK_END_API_LINK + "orders/" + `${id}/`,
+    data,
+    {
+      headers: getHeader(),
+    }
+  );
+};
+export type patchOrder = {
+  id?: string;
+  title?: string;
+  description?: string;
+  client?: string;
+  device?: string;
+  order_number?: string;
+  order_contact?: string;
+  technical?: string[];
+  problem_images?: string[];
+  state?: string;
+};
+export const patchOrderService = async (data: patchOrder) => {
+  const id = data.id;
+  delete data["id"];
+  await axios.patch(
     process.env.REACT_APP_BACK_END_API_LINK + "orders/" + `${id}/`,
     data,
     {

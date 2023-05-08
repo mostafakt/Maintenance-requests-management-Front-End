@@ -85,7 +85,7 @@ export default function UserReports() {
               client: r.client.name,
               device: r.device.name,
               order_number: r.order_number,
-              order_contact: r.order_contact,
+              order_contact: r.order_contact.map((t) => t.contact_name),
               technical: r.technical.map((t) => t.name),
             })) || []
           }
@@ -99,7 +99,8 @@ export default function UserReports() {
               client: r.client.name,
               device: r.device.name,
               order_number: r.order_number,
-              order_contact: r.order_contact,
+              order_contact: r.order_contact.map((t) => t.contact_name),
+
               technical: r.technical.map((t) => t.name),
               id: r.id,
             })) || []

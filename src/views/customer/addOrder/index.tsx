@@ -32,6 +32,8 @@ import {
 } from "views/admin/customers/services/clientsServices";
 import { getUser } from "services/authManager";
 import { devices, devicesType } from "../default/services/devicesServices";
+import Toaster from "components/Toaster/Toaster";
+import Toasters from "components/Toaster/Toaster";
 
 function CreateOrder() {
   // Chakra Color Mode
@@ -44,7 +46,9 @@ function CreateOrder() {
   const textColor = useColorModeValue("navy.700", "white");
   const LinkColor = useColorModeValue("orange.700", "red");
   const bg = useColorModeValue("white", "navy.700");
-
+  const [toast, setToast] = useState<{ state: boolean; text: string }>(
+    undefined
+  );
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(),
     description: Yup.string().required(),
@@ -67,6 +71,10 @@ function CreateOrder() {
     },
     validationSchema: validationSchema,
   });
+  useEffect(() => {
+    // setToast(undefined);
+    console.log(toast);
+  }, [toast]);
 
   useEffect(() => {
     devices(setDevicesListData);
@@ -81,6 +89,9 @@ function CreateOrder() {
   return (
     <>
       <Box pt={{ base: "50px", md: "0px" }} mt={{ xl: "70px" }}>
+        {/* {toast !== undefined && (
+          <Toasters accepted={toast?.state} text={toast?.text} />
+        )} */}
         <Card mb={{ base: "0px", "2xl": "20px" }}>
           <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
             order information :

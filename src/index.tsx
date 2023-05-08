@@ -9,6 +9,8 @@ import {
   BrowserRouter,
   Link,
 } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+
 import AuthLayout from "./layouts/auth";
 import AdminLayout from "./layouts/admin";
 import TechnicalLayout from "./layouts/technical";
@@ -21,6 +23,7 @@ import { AuthContextProvider } from "contexts/AuthContext";
 import PrivateRoute from "Routing/PrivateRoutes";
 import { MissingRoute } from "Routing/MissingRoute";
 import Customers from "views/admin/customers";
+import { ToastContainer } from "react-toastify";
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
@@ -44,6 +47,7 @@ ReactDOM.render(
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <ToastContainer />
         </BrowserRouter>
       </React.StrictMode>
     </AuthContextProvider>

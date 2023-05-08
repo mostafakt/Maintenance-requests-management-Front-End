@@ -37,6 +37,7 @@ import {
   getOrder,
   getOrderType,
   orderType,
+  patchOrderService,
   updateOrderService,
 } from "../services/recentOrdersServices";
 
@@ -86,16 +87,22 @@ function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
     getOrder(orderId, setOrderData);
   }, [orderId]);
   const rejectOrder = () => {
-    updateOrderService({
+    // updateOrderService({
+    //   id: orderData?.id,
+    //   title: orderData?.title,
+    //   state: "REJECTED",
+    //   description: orderData?.description,
+    //   client: orderData?.client.id,
+    //   device: orderData?.device.id,
+    //   order_number: orderData?.order_number,
+    //   order_contact: orderData?.order_contact[0].id,
+    //   technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
+    //   problem_images: orderData?.problem_images,
+    // });
+    patchOrderService({
       id: orderData?.id,
-      title: orderData?.title,
-      description: orderData?.description,
-      client: orderData?.client.id,
-      device: orderData?.device.id,
-      order_number: orderData?.order_number,
-      order_contact: orderData?.order_contact[0].id,
+      state: "REJECTED",
       technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
-      problem_images: orderData?.problem_images,
     });
   };
   const columns = [

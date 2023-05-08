@@ -21,6 +21,7 @@ export type devicesType = {
   }[];
 };
 export const devices = async (SetData: (val: devicesType) => void) => {
+
   await axios
     .get<devicesType>(process.env.REACT_APP_BACK_END_API_LINK + "devices/", {
       headers: getHeader(),

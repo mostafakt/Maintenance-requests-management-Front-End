@@ -9,6 +9,7 @@ import {
   recentOrders,
   recentOrdersList,
 } from "views/admin/default/services/recentOrdersServices";
+import Toaster from "components/Toaster/Toaster";
 export default function UserReports() {
   const [recentOrdersData, setRecentOrdersData] = useState<recentOrdersList>();
 
@@ -39,7 +40,7 @@ export default function UserReports() {
       RequriedVisit: "",
     },
   ]);
-
+  const tt = recentOrdersData?.results[0].technical.map((t) => t.name);
   useEffect(() => {
     devices(setDevicesList);
     recentOrders(setRecentOrdersData);
@@ -58,11 +59,10 @@ export default function UserReports() {
               title: r.title,
               state: r.state,
               description: r.description,
-              orderContact: r.order_contact,
               device: r.device.name,
               order_number: r.order_number,
-              order_contact: r.order_contact,
-
+              order_contact: r.order_contact.map((t) => t.contact_name),
+              orderContact: r.order_contact.map((t) => t.contact_name),
               technical: r.technical.map((t) => t.name),
             })) || []
           }

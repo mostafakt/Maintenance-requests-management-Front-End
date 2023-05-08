@@ -107,7 +107,7 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
       ),
       cell: (info) => (
         <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
+          {/* {info.getValue()[0]} */}
         </Text>
       ),
     }),

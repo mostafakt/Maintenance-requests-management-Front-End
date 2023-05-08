@@ -1,4 +1,6 @@
 import axios from "axios";
+import Toaster from "components/Toaster/Toaster";
+import { toast } from "react-toastify";
 import { getHeader } from "services/authManager";
 
 export type createOrderType = {
@@ -25,10 +27,22 @@ export type orderContactListType = {
     orders: string[];
   }[];
 };
-export const createOrder = async (data: createOrderType) => {
-  await axios.post(process.env.REACT_APP_BACK_END_API_LINK + "orders/", data, {
-    headers: getHeader(),
-  });
+export const createOrder = async (
+  data: createOrderType,
+  setToast?: (val: { state: boolean; text: string }) => void
+) => {
+  await axios
+    .post(process.env.REACT_APP_BACK_END_API_LINK + "orders/", data, {
+      headers: getHeader(),
+    })
+    .then(() => {
+      {
+        toast.success("succses");
+      }
+    })
+    .catch((e) => {
+      toast.error(`${JSON.stringify(e.response.data)}`);
+    });
 };
 export const orderContactsList = async (
   SetData: (val: orderContactListType) => void

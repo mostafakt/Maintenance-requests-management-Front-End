@@ -22,13 +22,13 @@ const routes = [
     component: <MainDashboard />,
   },
 
-  {
-    name: "Events",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: "/events",
-    component: <AddEvent />,
-  },
+  // {
+  //   name: "Events",
+  //   layout: "/admin",
+  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+  //   path: "/events",
+  //   component: <AddEvent />,
+  // },
   // {
   //   name: "tables",
   //   layout: "/admin",
