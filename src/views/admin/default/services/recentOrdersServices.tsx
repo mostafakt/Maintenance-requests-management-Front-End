@@ -136,6 +136,7 @@ export const getOrder = async (
   id: string,
   SetData: (val: getOrderType) => void
 ) => {
+  let data: getOrderType;
   await axios
     .get<getOrderType>(
       process.env.REACT_APP_BACK_END_API_LINK + "orders/" + `${id}/`,
@@ -145,6 +146,8 @@ export const getOrder = async (
       }
     )
     .then((val) => {
+      data = val.data;
       SetData(val.data);
     });
+  return data;
 };

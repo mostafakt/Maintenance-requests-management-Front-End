@@ -171,7 +171,7 @@ function CreateOrder() {
                   defaultValue={{ id: "", value: "" }}
                   onChange={(val) => formik.setFieldValue("device", val.id)}
                   options={
-                    devicesListData?.results.map((r) => ({
+                    devicesListData?.results?.map((r) => ({
                       id: r.id,
                       value: r.device_name,
                     })) || []
@@ -201,7 +201,7 @@ function CreateOrder() {
                     formik.setFieldValue("order_contact", val.id)
                   }
                   options={
-                    orderContactsListData?.results.map((r) => ({
+                    orderContactsListData?.results?.map((r) => ({
                       id: r.id,
                       value: r.contact_name,
                     })) || []

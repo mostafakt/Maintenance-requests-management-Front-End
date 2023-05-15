@@ -101,7 +101,7 @@ function SignIn() {
         setUser(res.data.user.pk);
         if (res.data.user.role === "TECHNICAL") {
           setRule("TECHNICAL");
-          navigate("/admin/default");
+          navigate("/TECHNICAL/default");
         }
         //@ts-ignore
         else if (res.data.user.role === "CLIENT") {

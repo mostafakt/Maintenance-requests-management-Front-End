@@ -40,6 +40,10 @@ import {
   patchOrderService,
   updateOrderService,
 } from "../services/recentOrdersServices";
+import {
+  technicalList,
+  technicalsListType,
+} from "views/admin/Technicals/services/technicalServices";
 
 type RowObj = {
   id: string;
@@ -52,12 +56,30 @@ type RowObj = {
   order_contact: string[];
   technical: string[];
 };
-
+// const TechCard = (id: number, name: string) => {
+//   return <Flex backgroundColor={}></Flex>;
+// };
 const columnHelper = createColumnHelper<RowObj>();
 // Modal.setAppElement("#yourAppElement");
 // const columns = columnsDataCheck;
-function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
+function OrdersRequests({
+  tableData,
+  onUpdate,
+}: {
+  tableData: RowObj[];
+  onUpdate?: () => void;
+}) {
   const [data, setData] = React.useState(() => [...tableData]);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [tecnicalListData, setTecnicalListData] =
+    React.useState<technicalsListType>();
+  const [selectedTecnicalList, setDelectedTecnicalList] = React.useState<
+    string[]
+  >([]);
+
+  React.useEffect(() => {
+    technicalList(setTecnicalListData);
+  }, []);
   const customStyles = {
     content: {
       top: "50%",
@@ -86,24 +108,26 @@ function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
   React.useEffect(() => {
     getOrder(orderId, setOrderData);
   }, [orderId]);
-  const rejectOrder = () => {
-    // updateOrderService({
-    //   id: orderData?.id,
-    //   title: orderData?.title,
-    //   state: "REJECTED",
-    //   description: orderData?.description,
-    //   client: orderData?.client.id,
-    //   device: orderData?.device.id,
-    //   order_number: orderData?.order_number,
-    //   order_contact: orderData?.order_contact[0].id,
-    //   technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
-    //   problem_images: orderData?.problem_images,
-    // });
-    patchOrderService({
-      id: orderData?.id,
+  const rejectOrder = async (id: string) => {
+    let data = await getOrder(orderId, setOrderData);
+
+    await patchOrderService({
+      id: data?.id,
       state: "REJECTED",
-      technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
+      // technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
     });
+    onUpdate();
+  };
+  const assignOrder = async () => {
+    let data = await getOrder(orderId, setOrderData);
+
+    patchOrderService({
+      id: data?.id,
+      state: "",
+      // technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
+    });
+    onUpdate();
+    setModalOpen(false);
   };
   const columns = [
     columnHelper.accessor("title", {
@@ -226,7 +250,7 @@ function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
               minW="185px"
               mx="auto"
               onClick={() => {
-                alert("accepted");
+                setModalOpen(true);
               }}
             >
               Accept and assign to technical
@@ -243,7 +267,7 @@ function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
               mx="auto"
               onClick={() => {
                 setOrderId(info.getValue());
-                rejectOrder();
+                rejectOrder(info.getValue());
               }}
             >
               reject
@@ -275,19 +299,42 @@ function OrdersRequests({ tableData }: { tableData: RowObj[] }) {
       <Modal
         isCentered
         onClose={() => {}}
-        isOpen={false}
+        isOpen={modalOpen}
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+          <ModalHeader>Select Technical</ModalHeader>
+          <ModalCloseButton
+            onClick={() => {
+              setModalOpen(false);
+            }}
+          />
+          <ModalBody>
+            <Card>
+              {tecnicalListData?.results?.map((t) => (
+                <Flex>{t.domain}</Flex>
+              ))}
+            </Card>
+          </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => {}}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                setModalOpen(false);
+              }}
+            >
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                assignOrder();
+              }}
+            >
+              Apply
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

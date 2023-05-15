@@ -23,7 +23,7 @@ import { FaEthereum } from "react-icons/fa";
 import routes from "Routing/routes";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
-import { setToken } from "services/authManager";
+import { getRule, setToken } from "services/authManager";
 export default function HeaderLinks(props: { secondary: boolean }) {
   const navigate = useNavigate();
   const { secondary } = props;
@@ -177,7 +177,9 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               _focus={{ bg: "none" }}
               borderRadius="8px"
               px="14px"
-              onClick={() => navigate("/client/profile")}
+              onClick={() => {
+                navigate(`/${getRule()}/profile`);
+              }}
             >
               <Text fontSize="sm">Profile Settings</Text>
             </MenuItem>

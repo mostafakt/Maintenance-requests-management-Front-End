@@ -86,11 +86,16 @@ export default function UserReports() {
               device: r.device.name,
               order_number: r.order_number,
               order_contact: r.order_contact.map((t) => t.contact_name),
-              technical: r.technical.map((t) => t.name),
+              technical: r?.technical?.map((t) => t.name),
             })) || []
           }
         />{" "}
         <OrdersRequests
+          onUpdate={() => {
+            devices(setDevicesList);
+            recentOrders(setRecentOrdersData);
+            recentOrders(setRequestedOrdersData, "INITIALIZED");
+          }}
           tableData={
             requestedOrdersData?.results.map((r) => ({
               title: r.title,
@@ -101,7 +106,7 @@ export default function UserReports() {
               order_number: r.order_number,
               order_contact: r.order_contact.map((t) => t.contact_name),
 
-              technical: r.technical.map((t) => t.name),
+              technical: r?.technical?.map((t) => t.name),
               id: r.id,
             })) || []
           }

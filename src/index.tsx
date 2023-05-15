@@ -37,7 +37,7 @@ ReactDOM.render(
             </Route>
 
             <Route element={<PrivateRoute rule={"TECHNICAL"} />}>
-              <Route path={`/technical/*`} element={<TechnicalLayout />} />
+              <Route path={`/TECHNICAL/*`} element={<TechnicalLayout />} />
             </Route>
             <Route element={<PrivateRoute rule={"CLIENT"} />}>
               <Route path={`/client/*`} element={<CustomerLayout />} />

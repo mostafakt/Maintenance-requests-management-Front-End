@@ -40,7 +40,7 @@ export default function UserReports() {
       RequriedVisit: "",
     },
   ]);
-  const tt = recentOrdersData?.results[0].technical.map((t) => t.name);
+  const tt = recentOrdersData?.results[0]?.technical?.map((t) => t.name);
   useEffect(() => {
     devices(setDevicesList);
     recentOrders(setRecentOrdersData);
@@ -63,7 +63,7 @@ export default function UserReports() {
               order_number: r.order_number,
               order_contact: r.order_contact.map((t) => t.contact_name),
               orderContact: r.order_contact.map((t) => t.contact_name),
-              technical: r.technical.map((t) => t.name),
+              technical: r.technical?.map((t) => t.name),
             })) || []
           }
         />

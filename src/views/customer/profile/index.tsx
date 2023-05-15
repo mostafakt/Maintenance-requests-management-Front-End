@@ -373,16 +373,6 @@ function Profile() {
               alignItems="flex-start"
               gap={"15px"}
             >
-              <Text
-                color={textColor}
-                fontSize="34px"
-                textAlign="start"
-                fontWeight="700"
-                lineHeight="100%"
-              >
-                profile images
-              </Text>
-
               <Text as="span" fontWeight="500" ms="4px">
                 By continuing you are agreeing to Eventcube's
                 <Link
