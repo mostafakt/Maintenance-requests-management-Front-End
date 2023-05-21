@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
+import { toast } from "react-toastify";
+
 // Chakra imports
 import {
   Box,
@@ -17,11 +19,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
-import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
 import illustration from "assets/img/auth/auth.png";
-import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { AuthContext } from "contexts/AuthContext";
@@ -111,6 +111,10 @@ function SignIn() {
           setRule("ADMIN");
           navigate("/admin/default");
         }
+      })
+      .catch((e) => {
+        //@ts-ignore
+        toast.error(`${JSON.stringify(e.response.data.non_field_errors[0])}`);
       });
   };
   return (

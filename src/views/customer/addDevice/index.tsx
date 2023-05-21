@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Image,
   InputGroup,
   InputLeftElement,
   Link,
@@ -82,6 +83,16 @@ function AddDevice() {
     console.log(formData);
   }, [formData]);
 
+  const deleteImage = async (index?: number) => {
+    let temp = await deviceData.device_images;
+    temp = temp.slice(0, index).concat(temp.slice(index + 1));
+    console.log(temp);
+
+    setDeviceData({
+      ...deviceData,
+      device_images: temp,
+    });
+  };
   return (
     <>
       <Box pt={{ base: "50px", md: "0px" }} mt={{ xl: "70px" }}>
@@ -280,6 +291,20 @@ function AddDevice() {
               >
                 Device images
               </Text>
+              <Flex direction={{ md: "column", xl: "row" }} gap={"5px"}>
+                {deviceData?.device_images?.map((e, index) => {
+                  const imageUrl = URL.createObjectURL(e);
+                  return (
+                    <Image
+                      borderRadius={"20px"}
+                      width={"100px"}
+                      height={"100px"}
+                      src={imageUrl}
+                      onClick={() => deleteImage(index)}
+                    />
+                  );
+                })}
+              </Flex>
               <Upload
                 //@ts-ignore
 

@@ -6,6 +6,7 @@ import { CreateOrderContact } from "views/customer/addOrderContct";
 
 // Admin Imports
 import MainDashboard from "views/customer/default";
+import { AddIssueImage } from "views/customer/issueImage";
 import { Profile } from "views/customer/profile";
 // Auth Imports
 const routes = [
@@ -56,6 +57,14 @@ const routes = [
     path: "/orderContat",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <CreateOrderContact />,
+  },
+  {
+    // sideBar: true,
+    name: "Add image for your issue",
+    layout: "/client",
+    path: "/issueimage",
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: <AddIssueImage />,
   },
 ];
 
