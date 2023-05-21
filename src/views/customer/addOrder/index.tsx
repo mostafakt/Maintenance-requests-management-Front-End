@@ -34,6 +34,8 @@ import { getUser } from "services/authManager";
 import { devices, devicesType } from "../default/services/devicesServices";
 import Toaster from "components/Toaster/Toaster";
 import Toasters from "components/Toaster/Toaster";
+import { Image } from "chakra-ui";
+import { Upload } from "../addDevice/components/Upload";
 
 function CreateOrder() {
   // Chakra Color Mode
@@ -215,6 +217,75 @@ function CreateOrder() {
                 />
               </FormControl>{" "}
             </Flex>{" "}
+            <Card
+              bg={bg}
+              display={"flex"}
+              justifyItems={"center"}
+              justifyContent={"center"}
+              alignItems="flex-start"
+              gap={"15px"}
+            >
+              <Text
+                color={textColor}
+                fontSize="34px"
+                textAlign="start"
+                fontWeight="700"
+                lineHeight="100%"
+              >
+                Device images
+              </Text>
+              {/* <Flex direction={{ md: "column", xl: "row" }} gap={"5px"}>
+                {imageIssueData?.problem_images?.map((e, index) => {
+                  const imageUrl = URL.createObjectURL(e);
+                  return (
+                    <Image
+                      borderRadius={"20px"}
+                      cursor={"pointer"}
+                      width={"100px"}
+                      height={"100px"}
+                      src={imageUrl}
+                      onClick={() => deleteImage(index)}
+                    />
+                  );
+                })}
+              </Flex> */}
+              <Upload
+                //@ts-ignore
+
+                maxW={"500px"}
+                justifyItems={"center"}
+                justifyContent={"center"}
+                gridArea={{
+                  base: "3 / 1 / 4 / 2",
+                  lg: "1 / 3 / 2 / 4",
+                }}
+                minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
+                pe="20px"
+                pb={{ base: "100px", lg: "20px" }}
+              />
+              <Text as="span" fontWeight="500" ms="4px">
+                By continuing you are agreeing to Eventcube's
+                <Link
+                  mx="3px"
+                  color={LinkColor}
+                  href=""
+                  target="_blank"
+                  fontWeight="700"
+                >
+                  Terms & Conditions
+                </Link>
+                and
+                <Link
+                  mx="3px"
+                  color={LinkColor}
+                  href=""
+                  target="_blank"
+                  fontWeight="700"
+                >
+                  Privacy Policy
+                </Link>
+              </Text>
+            </Card>
             <Button
               fontSize="sm"
               variant="brand"

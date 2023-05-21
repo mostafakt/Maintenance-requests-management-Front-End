@@ -1,5 +1,6 @@
+/* eslint-disable no-useless-concat */
 import axios from "axios";
-import { getHeader, getToken } from "services/authManager";
+import { getHeader } from "services/authManager";
 export type orderType = {
   id: string;
   title: string;
@@ -137,17 +138,19 @@ export const getOrder = async (
   SetData: (val: getOrderType) => void
 ) => {
   let data: getOrderType;
-  await axios
-    .get<getOrderType>(
-      process.env.REACT_APP_BACK_END_API_LINK + "orders/" + `${id}/`,
-      {
-        // params: { id: id },
-        headers: getHeader(),
-      }
-    )
-    .then((val) => {
-      data = val.data;
-      SetData(val.data);
-    });
-  return data;
+  if (id) {
+    await axios
+      .get<getOrderType>(
+        process.env.REACT_APP_BACK_END_API_LINK + "orders/" + `${id}/`,
+        {
+          // params: { id: id },
+          headers: getHeader(),
+        }
+      )
+      .then((val) => {
+        data = val.data;
+        SetData(val.data);
+      });
+    return data;
+  }
 };

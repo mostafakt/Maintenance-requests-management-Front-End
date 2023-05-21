@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "addevent"
-    ]
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

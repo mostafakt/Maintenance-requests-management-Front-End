@@ -105,11 +105,12 @@ function OrdersRequests({
   // let defaultData = tableData;
   const [orderData, setOrderData] = React.useState<getOrderType>();
   const [orderId, setOrderId] = React.useState("");
+  const [selectedTechnical, setSelectedTechnical] = React.useState("");
   React.useEffect(() => {
     getOrder(orderId, setOrderData);
   }, [orderId]);
   const rejectOrder = async (id: string) => {
-    let data = await getOrder(orderId, setOrderData);
+    let data = await getOrder(id, setOrderData);
 
     await patchOrderService({
       id: data?.id,
@@ -123,8 +124,8 @@ function OrdersRequests({
 
     patchOrderService({
       id: data?.id,
-      state: "",
-      // technical: ["33ad7cdb-f8ce-45dd-a70a-5781170da579"],
+      state: "ACCEPTED",
+      technical: [selectedTechnical],
     });
     onUpdate();
     setModalOpen(false);
@@ -250,6 +251,7 @@ function OrdersRequests({
               minW="185px"
               mx="auto"
               onClick={() => {
+                setOrderId(info.getValue());
                 setModalOpen(true);
               }}
             >
@@ -266,7 +268,6 @@ function OrdersRequests({
               minW="185px"
               mx="auto"
               onClick={() => {
-                setOrderId(info.getValue());
                 rejectOrder(info.getValue());
               }}
             >
@@ -311,9 +312,18 @@ function OrdersRequests({
             }}
           />
           <ModalBody>
-            <Card>
+            <Card display={"flex"} gap={"5px"}>
               {tecnicalListData?.results?.map((t) => (
-                <Flex>{t.domain}</Flex>
+                <Flex
+                  color={"white"}
+                  padding={"5px"}
+                  borderRadius={"5px"}
+                  bgColor={"#4DA5EA"}
+                  _hover={{ bgColor: "orange" }}
+                  onClick={() => setSelectedTechnical(t.technical)}
+                >
+                  {t.name}
+                </Flex>
               ))}
             </Card>
           </ModalBody>

@@ -1,5 +1,6 @@
 // Chakra imports
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Image } from "chakra-ui";
 
 // Custom components
 import { HorizonLogo, MastercardIcon } from "components/icons/Icons";
@@ -12,7 +13,13 @@ export function SidebarBrand() {
   return (
     <Flex alignItems="center" flexDirection="column">
       <Flex direction={"row"} gap={"10px"}>
-        <MastercardIcon h="26px" my="32px" color={logoColor} />
+        {/* <MastercardIcon h="26px" my="32px" color={logoColor} /> */}
+        <img
+          width={"40px"}
+          height={"40px"}
+          src={process.env.PUBLIC_URL + "/logo.png"}
+          alt=""
+        />
         <Text
           mt={"23px"}
           color="secondaryGray.600"
@@ -20,7 +27,7 @@ export function SidebarBrand() {
           fontWeight="900"
           me="12px"
         >
-          Event Club
+          Hamsie services
         </Text>
       </Flex>
       <HSeparator mb="20px" />

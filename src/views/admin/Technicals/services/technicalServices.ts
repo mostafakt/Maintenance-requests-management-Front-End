@@ -3,13 +3,17 @@ import { getHeader } from "services/authManager";
 
 export type technicalsListType = {
   count: number;
-  next: string;
-  previous: string;
+  next: number;
+  previous: number;
   results: {
     identity_image: string;
     domain: string;
     phone_number: string;
     address: string;
+    technical: string;
+    orders: string[];
+    name: string;
+    email: string;
   }[];
 };
 
