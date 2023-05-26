@@ -13,6 +13,7 @@ import Customer from "views/admin/customers/customer/Customer";
 import Technicals from "views/admin/Technicals/Technicals";
 import Technical from "views/admin/Technicals/Technical/Technical";
 import { Profile } from "views/technical/profile";
+import UserReports from "views/technical/default";
 
 const routes = [
   {
@@ -21,7 +22,7 @@ const routes = [
     layout: "/technical",
     path: "/default",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <></>,
+    component: <UserReports />,
   },
   {
     sideBar: true,
