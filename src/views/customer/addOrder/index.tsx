@@ -261,7 +261,7 @@ function CreateOrder() {
                 />
               </FormControl>{" "}
             </Flex>{" "}
-            <Box pt={{ base: "50px", md: "0px" }} mt={{ xl: "70px" }}>
+            <Box  >
               <Card mb={{ base: "0px", "2xl": "20px" }}>
                 <Text
                   color={textColor}
@@ -272,43 +272,6 @@ function CreateOrder() {
                   Your Issue information :
                 </Text>
                 <FormControl>
-                  <Flex direction={{ sm: "column", xl: "row" }} gap="15px">
-                    <FormControl>
-                      <FormLabel
-                        display="flex"
-                        ms="4px"
-                        fontSize="sm"
-                        fontWeight="500"
-                        color={textColor}
-                        mb="8px"
-                      >
-                        issue comment <Text color={brandStars}>*</Text>
-                      </FormLabel>
-                      {imageIssueData?.comments?.map((t, index) => (
-                        <>
-                          <Input
-                            value={imageIssueData?.comments[index]}
-                            onChange={(e) => {
-                              let commentsList = imageIssueData?.comments;
-                              commentsList[index] = e.target.value;
-                              setImageIssueData({
-                                ...imageIssueData,
-                                comments: commentsList,
-                              });
-                            }}
-                            isRequired={true}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{ base: "0px", md: "0px" }}
-                            mb="24px"
-                            fontWeight="500"
-                            size="lg"
-                          />
-                        </>
-                      ))}
-                    </FormControl>{" "}
-                  </Flex>
-
                   <Card
                     bg={bg}
                     display={"flex"}
@@ -324,23 +287,66 @@ function CreateOrder() {
                       fontWeight="700"
                       lineHeight="100%"
                     >
-                      Device images
+                      issue images
                     </Text>
-                    <Flex direction={{ md: "column", xl: "row" }} gap={"5px"}>
-                      {imageIssueData?.problem_images?.map((e, index) => {
-                        const imageUrl = URL.createObjectURL(e);
-                        return (
-                          <Image
-                            borderRadius={"20px"}
-                            cursor={"pointer"}
-                            width={"100px"}
-                            height={"100px"}
-                            src={imageUrl}
-                            onClick={() => deleteImage(index)}
-                          />
-                        );
-                      })}
+                    <Flex direction={{ md: "column", xl: "row" }}>
+                      <Flex
+                        direction={{ sm: "column", xl: "column" }}
+                        gap="15px"
+                      >
+                        {imageIssueData?.problem_images?.map((e, index) => {
+                          const imageUrl = URL.createObjectURL(e);
+
+                          return (
+                            <Flex direction={"row"} gap={"5px"}>
+                              <Image
+                                borderRadius={"20px"}
+                                cursor={"pointer"}
+                                width={"100px"}
+                                height={"100px"}
+                                src={imageUrl}
+                                onClick={() => deleteImage(index)}
+                              />
+                              <FormControl>
+                                <FormLabel
+                                  display="flex"
+                                  ms="4px"
+                                  fontSize="sm"
+                                  fontWeight="500"
+                                  color={textColor}
+                                  mb="8px"
+                                >
+                                  issue comment{" "}
+                                  <Text color={brandStars}>*</Text>
+                                </FormLabel>
+                                <>
+                                  <Input
+                                    value={imageIssueData?.comments[index]}
+                                    onChange={(e) => {
+                                      let commentsList =
+                                        imageIssueData?.comments;
+                                      commentsList[index] = e.target.value;
+                                      setImageIssueData({
+                                        ...imageIssueData,
+                                        comments: commentsList,
+                                      });
+                                    }}
+                                    isRequired={true}
+                                    variant="auth"
+                                    fontSize="sm"
+                                    ms={{ base: "0px", md: "0px" }}
+                                    mb="24px"
+                                    fontWeight="500"
+                                    size="lg"
+                                  />
+                                </>
+                              </FormControl>
+                            </Flex>
+                          );
+                        })}
+                      </Flex>
                     </Flex>
+
                     <Upload
                       //@ts-ignore
 
