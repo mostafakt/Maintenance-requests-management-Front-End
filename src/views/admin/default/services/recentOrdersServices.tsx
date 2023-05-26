@@ -36,8 +36,8 @@ export type orderType = {
 
 export type recentOrdersList = {
   count: number;
-  next: string;
-  previous: string;
+  next: number;
+  previous: number;
   results: orderType[];
 };
 export const recentOrders = async (

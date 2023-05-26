@@ -89,6 +89,9 @@ export default function UserReports() {
               technical: r?.technical?.map((t) => t.name),
             })) || []
           }
+          count={recentOrdersData.count}
+          next={recentOrdersData.next}
+          priv={recentOrdersData.previous}
         />{" "}
         <OrdersRequests
           onUpdate={() => {

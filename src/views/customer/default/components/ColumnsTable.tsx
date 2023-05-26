@@ -25,6 +25,7 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import { Link } from "react-router-dom";
+import Pagination from "components/Pagination/Pagination";
 
 type RowObj = {
   title: string;
@@ -261,6 +262,12 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
               })}
           </Tbody>
         </Table>
+        {/* <Pagination
+          currentPage={10}
+          itemsPerPage={10}
+          paginate={(val: number) => {}}
+          totalItems={100}
+        /> */}
       </Box>
     </Card>
   );

@@ -58,14 +58,14 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <CreateOrderContact />,
   },
-  {
-    // sideBar: true,
-    name: "Add image for your issue",
-    layout: "/client",
-    path: "/issueimage",
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: <AddIssueImage />,
-  },
+  // {
+  //   // sideBar: true,
+  //   name: "Add image for your issue",
+  //   layout: "/client",
+  //   path: "/issueimage",
+  //   icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+  //   component: <AddIssueImage />,
+  // },
 ];
 
 export default routes;

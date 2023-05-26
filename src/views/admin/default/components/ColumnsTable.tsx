@@ -40,7 +40,14 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
+export default function ColumnTable({
+  tableData,
+}: {
+  tableData: RowObj[];
+  count: number;
+  priv: number;
+  next: number;
+}) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {

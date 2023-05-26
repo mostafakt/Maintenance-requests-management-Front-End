@@ -30,7 +30,7 @@ export type deviceData = {
 };
 function AddDevice() {
   // Chakra Color Mode
-  const { file } = useContext(AuthContext);
+  const { file, action } = useContext(AuthContext);
 
   const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
@@ -77,11 +77,9 @@ function AddDevice() {
   }, [file]);
 
   useEffect(() => {
-    // console.log(deviceData);
-  }, [deviceData]);
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+    action.addFile(undefined);
+    return () => action.addFile(undefined);
+  }, []);
 
   const deleteImage = async (index?: number) => {
     let temp = await deviceData.device_images;
