@@ -1,4 +1,4 @@
-import { CalendarIcon, TimeIcon } from "@chakra-ui/icons";
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import {
   Box,
   Button,
@@ -6,16 +6,12 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftElement,
   Link,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
-import { useState, useContext, useEffect } from "react";
-import { AuthContext } from "contexts/AuthContext";
-import { json } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   editProfile,
   fetchProfile,
@@ -32,31 +28,20 @@ export type deviceData = {
 };
 function Profile() {
   // Chakra Color Mode
-  const { file } = useContext(AuthContext);
 
-  const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
   const textColor = useColorModeValue("navy.700", "white");
   const LinkColor = useColorModeValue("orange.700", "red");
   const bg = useColorModeValue("white", "navy.700");
   const [userData, setUserDat] = useState<TechUpdateTypeParms>();
-  const [deviceData, setDeviceData] = useState<deviceData>({
-    device_name: "string",
-    serial_number: `${Math.random()}sdasd${Math.random()}`,
-    manufacturing_date: "2019-08-24T14:15:22Z",
-    device_model: "string",
-    device_type: "string",
-    work_rate: "string",
-    device_images: [],
-  });
-  const [disabled, setDisabled] = useState(true);
-  const formData = new FormData();
 
+  const [disabled, setDisabled] = useState(true);
   const onSubmit = async () => {
     await editProfile(userData);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchProfile(setUserDat);
   }, []);
 

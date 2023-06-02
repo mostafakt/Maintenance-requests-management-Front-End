@@ -1,14 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/css/App.css";
-import {
-  HashRouter,
-  Route,
-  Routes,
-  Navigate,
-  BrowserRouter,
-  Link,
-} from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import AuthLayout from "./layouts/auth";
@@ -21,8 +14,6 @@ import { AddEvent } from "views/admin/addevent";
 // import Store from "views/Store";
 import { AuthContextProvider } from "contexts/AuthContext";
 import PrivateRoute from "Routing/PrivateRoutes";
-import { MissingRoute } from "Routing/MissingRoute";
-import Customers from "views/admin/customers";
 import { ToastContainer } from "react-toastify";
 
 ReactDOM.render(

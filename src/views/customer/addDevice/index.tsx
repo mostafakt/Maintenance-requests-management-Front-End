@@ -1,4 +1,8 @@
-import { CalendarIcon, TimeIcon } from "@chakra-ui/icons";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import {
   Box,
   Button,
@@ -7,8 +11,6 @@ import {
   FormLabel,
   Input,
   Image,
-  InputGroup,
-  InputLeftElement,
   Link,
   Text,
   useColorModeValue,
@@ -18,7 +20,6 @@ import { Upload } from "./components/Upload";
 import { useState, useContext, useEffect } from "react";
 import { postDevice } from "./services/addDeviceService";
 import { AuthContext } from "contexts/AuthContext";
-import { json } from "react-router-dom";
 export type deviceData = {
   device_name: string;
   serial_number: string;
@@ -32,7 +33,6 @@ function AddDevice() {
   // Chakra Color Mode
   const { file, action } = useContext(AuthContext);
 
-  const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
   const textColor = useColorModeValue("navy.700", "white");
   const LinkColor = useColorModeValue("orange.700", "red");
@@ -62,7 +62,6 @@ function AddDevice() {
     await deviceData?.device_images?.map((e, index) => {
       formData.append(`device_images[${index}]`, e);
     });
-    console.log(formData);
     await postDevice(formData);
   };
   useEffect(() => {
@@ -84,7 +83,6 @@ function AddDevice() {
   const deleteImage = async (index?: number) => {
     let temp = await deviceData.device_images;
     temp = temp.slice(0, index).concat(temp.slice(index + 1));
-    console.log(temp);
 
     setDeviceData({
       ...deviceData,

@@ -8,6 +8,7 @@ export type TechUpdateTypeParms = {
   address: string;
 };
 export const fetchProfile = async (
+  // eslint-disable-next-line no-unused-vars
   setUser: (val: TechUpdateTypeParms) => void
 ) => {
   await axios

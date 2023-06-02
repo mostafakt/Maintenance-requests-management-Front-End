@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // Chakra imports
@@ -55,14 +55,14 @@ function SignIn() {
   const textColorBrand = useColorModeValue("brand.500", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
 
-  const [show, setShow] = React.useState(false);
+  const [show] = React.useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handelLogin = async () => {
     // navigate("/admin/default");
 
-    const res = await axios
+    await axios
       .post<loginResponce>(
         process.env.REACT_APP_BACK_END_API_LINK + "user/login/",
         {
