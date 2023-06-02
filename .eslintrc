@@ -1,0 +1,53 @@
+{
+  /*
+    PLUGINS TO CONSIDER
+
+    "eslint-plugin-import" -> "plugin:import/errors" & "plugin:import/warnings" (requires additional setup to resolve TS!)
+    "eslint-plugin-jest-dom" -> "plugin:jest-dom/recommended"
+    "eslint-plugin-prettier" -> "plugin:prettier/recommended" (use with caution! might be in conflict with ESLInt options)
+    "eslint-plugin-react" -> "plugin:react/recommended"
+    "eslint-plugin-react-hooks" -> "plugin:react-hooks/recommended"
+    "eslint-plugin-react-redux" -> "plugin:react-redux/recommended"
+  */
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["*.html", "*.css", "*.png", "*.svg", "*.ico", "*.ttf", "*.woff", "*.woff2", "*.txt", "*.json", "*webpack/**/*"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "jest": true,
+    "browser": true,
+    "es6": true,
+    "es2017": true,
+    "es2020": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    // @eslint specific
+    "no-shadow": "off", // corresponding rule in @typescript-eslint is required
+    "no-console": "error",
+    "arrow-parens": ["error", "always"],
+    "no-unused-vars": "off", // corresponding rule in @typescript-eslint is required
+
+    // @typescript-eslint specific
+    "@typescript-eslint/no-unsafe-argument": 0,
+    "@typescript-eslint/no-shadow": ["error"],  // corresponding rule in eslint is required
+    "@typescript-eslint/no-duplicate-imports": "error",
+    "@typescript-eslint/no-unused-vars": ["error"]  // corresponding rule in eslint is required
+  }
+}

@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,13 +32,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import {
-  getToken,
-  setExpiresIn,
-  setRule,
-  setToken,
-  setUser,
-} from "services/authManager";
+import { setExpiresIn, setRule, setToken, setUser } from "services/authManager";
 type loginResponce = {
   access_token: string;
   refresh_token: string;
@@ -48,32 +47,18 @@ type loginResponce = {
   username: string;
 };
 function SignIn() {
-  const { action, email: userEmail } = useContext(AuthContext);
+  const { action } = useContext(AuthContext);
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
   const textColorBrand = useColorModeValue("brand.500", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
-  const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
-  const googleText = useColorModeValue("navy.700", "white");
-  const googleHover = useColorModeValue(
-    { bg: "gray.200" },
-    { bg: "whiteAlpha.300" }
-  );
-  const googleActive = useColorModeValue(
-    { bg: "secondaryGray.300" },
-    { bg: "whiteAlpha.200" }
-  );
+
   const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(userEmail);
-  }, [userEmail]);
-
   const handelLogin = async () => {
     // navigate("/admin/default");
 
@@ -96,7 +81,6 @@ function SignIn() {
         setToken(res.data.access_token);
         //@ts-ignore
         setExpiresIn(jwtDecode(res.data.access_token).exp);
-        console.log(res.data.user.role + "----------------------------");
         //@ts-ignore
         setUser(res.data.user.pk);
         if (res.data.user.role === "TECHNICAL") {
@@ -117,6 +101,11 @@ function SignIn() {
         toast.error(`${JSON.stringify(e.response.data.non_field_errors[0])}`);
       });
   };
+
+  function handleClick(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <DefaultAuth image={illustration}>
       <Flex
@@ -244,6 +233,7 @@ function SignIn() {
               w="100%"
               h="50"
               mb="24px"
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() => handelLogin()}
             >
               Sign In
