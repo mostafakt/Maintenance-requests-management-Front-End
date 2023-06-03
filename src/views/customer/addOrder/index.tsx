@@ -1,4 +1,3 @@
-import { CalendarIcon, TimeIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -16,7 +15,6 @@ import * as Yup from "yup";
 import Card from "components/card/Card";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "contexts/AuthContext";
-import { json } from "react-router-dom";
 import {
   createOrder,
   createOrderType,
@@ -25,14 +23,8 @@ import {
 } from "./services/createOrdersServices";
 import { useFormik } from "formik";
 import { Select } from "components/Select/MainMenu";
-import {
-  clientsList,
-  clientsListType,
-} from "views/admin/customers/services/clientsServices";
 import { getUser } from "services/authManager";
 import { devices, devicesType } from "../default/services/devicesServices";
-import Toaster from "components/Toaster/Toaster";
-import Toasters from "components/Toaster/Toaster";
 import { Upload } from "../addDevice/components/Upload";
 import { postImage } from "./services/issueImageService";
 
@@ -42,17 +34,14 @@ function CreateOrder() {
   const [devicesListData, setDevicesListData] = useState<devicesType>();
   const [orderContactsListData, setOrderContactsListData] =
     useState<orderContactListType>();
-  const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
   const textColor = useColorModeValue("navy.700", "white");
   const LinkColor = useColorModeValue("orange.700", "red");
   const bg = useColorModeValue("white", "navy.700");
-  const [toast, setToast] = useState<{ state: boolean; text: string }>(
-    undefined
-  );
+
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(),
-    description: Yup.string().required(),
+    // title: Yup.string().required(),
+    // description: Yup.string().required(),
     // order_number: Yup.string().required(),
     device: Yup.string().required(),
     // order_contact: Yup.string().required(),
@@ -64,8 +53,9 @@ function CreateOrder() {
       description: "",
       client: getUser(),
       device: "",
-
-      problem_images: ["497f6eca-6276-4993-bfeb-53cbbbba6f08"],
+      order_work_status: "Normal Workday Hours",
+      order_type: "Service Order",
+      problem_images: [],
     },
     onSubmit: async (values) => {
       let postData = await onSubmit();
@@ -75,16 +65,13 @@ function CreateOrder() {
     },
     validationSchema: validationSchema,
   });
-  useEffect(() => {
-    // setToast(undefined);
-    console.log(toast);
-  }, [toast]);
 
   useEffect(() => {
     action.addFile(undefined);
     devices(setDevicesListData);
     orderContactsList(setOrderContactsListData);
     return () => action.addFile(undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [imageIssueData, setImageIssueData] = useState<{
@@ -153,23 +140,31 @@ function CreateOrder() {
                   color={textColor}
                   mb="8px"
                 >
-                  description<Text color={brandStars}>*</Text>
+                  order type<Text color={brandStars}>*</Text>
                 </FormLabel>
-                <Input
-                  value={formik?.values?.description}
-                  onChange={(val) =>
-                    formik.setFieldValue("description", val.target.value)
-                  }
-                  style={{
-                    borderColor: formik.errors.description ? "red" : "",
-                  }}
-                  isRequired={true}
+                <Select
+                  defaultValue={{ id: "", value: "" }}
+                  onChange={(val) => formik.setFieldValue("order_type", val.id)}
+                  options={[
+                    {
+                      id: "Service Order",
+                      value: "Service Order",
+                    },
+                    {
+                      id: "Inspection Order",
+                      value: "Inspection Order",
+                    },
+                    {
+                      id: "Service Content Emergency Order",
+                      value: "Service Content Emergency Order",
+                    },
+                  ]}
                   variant="auth"
                   fontSize="sm"
                   ms={{ base: "0px", md: "0px" }}
                   mb="24px"
                   fontWeight="500"
-                  size="lg"
+                  error={formik.errors.device ? true : false}
                 />
               </FormControl>{" "}
               <FormControl>
@@ -181,23 +176,30 @@ function CreateOrder() {
                   color={textColor}
                   mb="8px"
                 >
-                  title<Text color={brandStars}>*</Text>
+                  order work status<Text color={brandStars}>*</Text>
                 </FormLabel>
-                <Input
-                  value={formik?.values?.title}
+                <Select
+                  defaultValue={{ id: "", value: "" }}
                   onChange={(val) =>
-                    formik.setFieldValue("title", val.target.value)
+                    formik.setFieldValue("order_work_status", val.id)
                   }
-                  style={{
-                    borderColor: formik.errors.title ? "red" : "",
-                  }}
-                  isRequired={true}
+                  options={[
+                    {
+                      id: "Normal Workday Hours",
+                      value: "Normal Workday Hours",
+                    },
+                    {
+                      id: "Weekend Hours",
+                      value: "Weekend Hours",
+                    },
+                    { id: "Urgent Request", value: "Urgent Request" },
+                  ]}
                   variant="auth"
                   fontSize="sm"
                   ms={{ base: "0px", md: "0px" }}
                   mb="24px"
                   fontWeight="500"
-                  size="lg"
+                  error={formik.errors.device ? true : false}
                 />
               </FormControl>{" "}
             </Flex>{" "}
@@ -242,7 +244,7 @@ function CreateOrder() {
                   order contacts <Text color={brandStars}>*</Text>
                 </FormLabel>
                 <Select
-                  defaultValue={{ id: "", value: "sss" }}
+                  defaultValue={{ id: "", value: "" }}
                   onChange={(val) =>
                     formik.setFieldValue("order_contact", val.id)
                   }
@@ -261,7 +263,7 @@ function CreateOrder() {
                 />
               </FormControl>{" "}
             </Flex>{" "}
-            <Box  >
+            <Box>
               <Card mb={{ base: "0px", "2xl": "20px" }}>
                 <Text
                   color={textColor}

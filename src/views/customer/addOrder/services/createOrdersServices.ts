@@ -5,14 +5,22 @@ import { getHeader } from "services/authManager";
 
 export type createOrderType = {
   id?: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   client: string;
   device: string;
   order_number?: string;
   order_contact?: string;
   technical?: string[];
   problem_images: string[];
+  order_work_status:
+    | "Normal Workday Hours"
+    | "Weekend Hours"
+    | "Urgent Request";
+  order_type:
+    | "Service Order"
+    | "Inspection Order"
+    | "Service Content Emergency Order";
 };
 export type orderContactListType = {
   count: number;

@@ -1,4 +1,5 @@
 import { CalendarIcon, TimeIcon } from "@chakra-ui/icons";
+import DatePicker from "react-datepicker";
 import {
   Box,
   Button,
@@ -19,6 +20,7 @@ import { useState, useContext, useEffect } from "react";
 import { postDevice } from "./services/addDeviceService";
 import { AuthContext } from "contexts/AuthContext";
 import { json } from "react-router-dom";
+
 export type deviceData = {
   device_name: string;
   serial_number: string;
@@ -196,6 +198,12 @@ function AddDevice() {
                   mb="8px"
                 >
                   manufacturing date<Text color={brandStars}>*</Text>
+                  {/* <DatePicker
+                    onChange={() => {}}
+                    // selected={deviceData?.manufacturing_date}
+                    // onSelect={handleDateSelect} //when day is clicked
+                    // onChange={handleDateChange} //only when value has changed
+                  /> */}
                 </FormLabel>
                 <Input
                   value={deviceData?.manufacturing_date}
