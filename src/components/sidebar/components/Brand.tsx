@@ -5,6 +5,7 @@ import { Image } from "chakra-ui";
 // Custom components
 import { HorizonLogo, MastercardIcon } from "components/icons/Icons";
 import { HSeparator } from "components/separator/Separator";
+import logo from './logo.png';
 
 export function SidebarBrand() {
   //   Chakra color mode
@@ -17,20 +18,19 @@ export function SidebarBrand() {
         <img
           width={"40px"}
           height={"40px"}
-          src={process.env.PUBLIC_URL + "/logo.png"}
+          src={logo}
           alt=""
         />
         <Text
-          mt={"23px"}
           color="secondaryGray.600"
           fontSize="2xl"
           fontWeight="900"
           me="12px"
         >
-          Hamsie services
+          Hamsie Services
         </Text>
       </Flex>
-      <HSeparator mb="20px" />
+      <HSeparator mb="20px" mt={"20px"} />
     </Flex>
   );
 }

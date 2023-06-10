@@ -176,10 +176,10 @@ export default function DevidesList({ tableData }: { tableData: RowObj[] }) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Devides List
+          Devices List
         </Text>
-        <Link to={"/admin/orders"}>
-          <Button>View All Orders</Button>
+        <Link to={"/admin/devices"}>
+          <Button>View All Devices</Button>
         </Link>
       </Flex>
       <Box>
