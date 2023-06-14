@@ -12,6 +12,7 @@ import Customers from "views/admin/customers";
 import Customer from "views/admin/customers/customer/Customer";
 import Technicals from "views/admin/Technicals/Technicals";
 import Technical from "views/admin/Technicals/Technical/Technical";
+import { ShowOrder } from "views/admin/OrderDetails";
 
 const routes = [
   {
@@ -22,34 +23,6 @@ const routes = [
     component: <MainDashboard />,
   },
 
-  // {
-  //   name: "Events",
-  //   layout: "/admin",
-  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-  //   path: "/events",
-  //   component: <AddEvent />,
-  // },
-  // {
-  //   name: "tables",
-  //   layout: "/admin",
-  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-  //   path: "/data-tables",
-  //   component: DataTables,
-  // },
-  // {
-  //   name: "Orders",
-  //   layout: "/admin",
-  //   path: "/profile",
-  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-  //   component: Profile,
-  // },
-  // {
-  //   name: "Orders",
-  //   layout: "/admin",
-  //   path: "/orders",
-  //   icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-  //   component: <Orders />,
-  // },
   {
     name: "Customers",
     layout: "/admin",
@@ -79,6 +52,14 @@ const routes = [
     path: "/Customer/:id",
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     component: <Customer />,
+  },
+  {
+    sideBar: true,
+    name: "Customer",
+    layout: "/admin",
+    path: "/default/order/:id",
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    component: <ShowOrder />,
   },
   {
     name: "Sign In",

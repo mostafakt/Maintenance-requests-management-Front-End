@@ -23,11 +23,12 @@ import {
 
 import { useState, useEffect } from "react";
 const Select = (props: {
-  options: { id: string; value: string }[];
+  options?: { id: string; value: string }[];
   defaultValue: { id: string; value: string };
-  onChange: (val: { id: string; value: string }) => void;
+  onChange?: (val: { id: string; value: string }) => void;
   error?: boolean;
   [x: string]: any;
+  disabled?: boolean;
 }) => {
   const { options, defaultValue, onChange, error, ...rest } = props;
 
@@ -60,11 +61,11 @@ const Select = (props: {
     onClose: onClose1,
   } = useDisclosure();
   useEffect(() => {
-    onChange(value);
+    if (onChange) onChange(value);
   }, [value]);
 
   return (
-    <Menu isOpen={isOpen1} onClose={onClose1}>
+    <Menu isOpen={isOpen1 && !props.disabled} onClose={onClose1}>
       <MenuButton
         alignItems="center"
         justifyContent="center"

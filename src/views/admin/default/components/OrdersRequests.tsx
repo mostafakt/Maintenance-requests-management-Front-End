@@ -265,7 +265,6 @@ function OrdersRequests({
               color={"white"}
               fontWeight="regular"
               fontSize="sm"
-              minW="185px"
               mx="auto"
               onClick={() => {
                 rejectOrder(info.getValue());
@@ -274,6 +273,18 @@ function OrdersRequests({
               reject
             </Button>
             {/* {info.getValue()} */}
+            <Link to={"/admin/default/order/" + `${info.getValue()}`}>
+              <Button
+                fontSize="sm"
+                variant="brand"
+                fontWeight="500"
+                w="80%"
+
+                // borderRadius={"100px"}
+              >
+                Show
+              </Button>
+            </Link>
           </Flex>
         </Flex>
       ),

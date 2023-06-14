@@ -27,6 +27,7 @@ import Card from "components/card/Card";
 import { Link } from "react-router-dom";
 
 type RowObj = {
+  id: string;
   title: string;
   state: string;
   description: string;
@@ -172,6 +173,32 @@ export default function ColumnTable({
         </Text>
       ),
     }),
+    columnHelper.accessor("id", {
+      id: "id",
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          Actions
+        </Text>
+      ),
+      cell: (info) => (
+        <Link to={"/admin/default/order/" + `${info.getValue()}`}>
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w="60%"
+            borderRadius={"100px"}
+          >
+            Show
+          </Button>
+        </Link>
+      ),
+    }),
   ];
   const table = useReactTable({
     data,
@@ -201,7 +228,7 @@ export default function ColumnTable({
         >
           Recent Orders
         </Text>
-        <Link to={"/admin/orders"}>
+        <Link to={"/admin/order"}>
           <Button>View All Orders</Button>
         </Link>
       </Flex>

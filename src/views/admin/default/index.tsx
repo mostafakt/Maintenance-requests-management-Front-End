@@ -79,6 +79,7 @@ export default function UserReports() {
         <ColumnsTable
           tableData={
             recentOrdersData?.results.map((r) => ({
+              id: r.id,
               title: r.title,
               state: r.state,
               description: r.description,

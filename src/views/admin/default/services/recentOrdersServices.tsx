@@ -48,7 +48,7 @@ export const recentOrders = async (
     .get<recentOrdersList>(
       process.env.REACT_APP_BACK_END_API_LINK + "orders/",
       {
-        params: { state: filter },
+        params: { state: filter, page: 1 },
         headers: getHeader(),
       }
     )
