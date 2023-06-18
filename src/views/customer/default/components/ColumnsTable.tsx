@@ -41,7 +41,23 @@ type RowObj = {
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
+export default function ColumnTable({
+  tableData,
+  pagination,
+  setPagination,
+}: {
+  tableData: RowObj[];
+  pagination: {
+    page: number;
+    perPage: number;
+    count: number;
+  };
+  setPagination: (val: {
+    page: number;
+    perPage: number;
+    count: number;
+  }) => void;
+}) {
   const [data, setData] = React.useState(() => [...tableData]);
 
   React.useEffect(() => {
@@ -262,12 +278,18 @@ export default function ColumnTable({ tableData }: { tableData: RowObj[] }) {
               })}
           </Tbody>
         </Table>
-        {/* <Pagination
-          currentPage={10}
-          itemsPerPage={10}
-          paginate={(val: number) => {}}
-          totalItems={100}
-        /> */}
+        <Pagination
+          currentPage={pagination.page}
+          itemsPerPage={pagination.perPage}
+          paginate={(val) => {
+            setPagination({
+              ...pagination,
+              page: val.page,
+              perPage: val.perPage,
+            });
+          }}
+          totalItems={pagination.count}
+        />
       </Box>
     </Card>
   );

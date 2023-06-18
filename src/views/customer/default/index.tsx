@@ -21,30 +21,22 @@ export default function UserReports() {
     "unset"
   );
   const [devicesList, setDevicesList] = useState<devicesType>();
-  const [rows, setRows] = useState<
-    {
-      id: number;
-      description: string;
-      timeofoccurrance: string;
-      Frequencyofoccurane: number;
-      RequriedVisit: string;
-      location: string;
-    }[]
-  >([
-    {
-      description: "r.description",
-      Frequencyofoccurane: 0,
-      timeofoccurrance: "",
-      location: "r.location,",
-      id: 1,
-      RequriedVisit: "",
-    },
-  ]);
-  const tt = recentOrdersData?.results[0]?.technical?.map((t) => t.name);
+  const [ordersPage, setOrdersPage] = useState({
+    page: 1,
+    perPage: 10,
+    count: 100,
+  });
   useEffect(() => {
-    devices(setDevicesList);
-    recentOrders(setRecentOrdersData);
+    devices(setDevicesList, 1, 5);
+    recentOrders(setRecentOrdersData, ordersPage.page, ordersPage.perPage);
   }, []);
+  useEffect(() => {
+    recentOrders(setRecentOrdersData, ordersPage.page, ordersPage.perPage);
+  }, [ordersPage]);
+
+  useEffect(() => {
+    setOrdersPage({ ...ordersPage, count: recentOrdersData?.count });
+  }, [recentOrdersData]);
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -66,6 +58,8 @@ export default function UserReports() {
               technical: r.technical?.map((t) => t.name),
             })) || []
           }
+          pagination={ordersPage}
+          setPagination={setOrdersPage}
         />
         <DevidesList tableData={devicesList?.results?.map((r) => r) || []} />
       </Flex>

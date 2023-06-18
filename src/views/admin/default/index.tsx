@@ -24,36 +24,22 @@ import {
 } from "./services/recentOrdersServices";
 import { OrdersRequests } from "./components/OrdersRequests";
 export default function UserReports() {
-  // Chakra Color Mode
-  const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-  const cardShadow = useColorModeValue(
-    "0px 18px 40px rgba(112, 144, 176, 0.12)",
-    "unset"
-  );
+  const [ordersPage, setOrdersPage] = useState({
+    page: 1,
+    perPage: 10,
+    count: undefined,
+  });
+  const [ordersRequestsPage, setOrdersRequestsPage] = useState({
+    page: 1,
+    perPage: 10,
+    count: undefined,
+  });
+
   const [devicesList, setDevicesList] = useState<devicesType>();
   const [recentOrdersData, setRecentOrdersData] = useState<recentOrdersList>();
   const [requestedOrdersData, setRequestedOrdersData] =
     useState<recentOrdersList>();
 
-  const [rows, setRows] = useState<
-    {
-      id: number;
-      description: string;
-      timeofoccurrance: string;
-      Frequencyofoccurane: number;
-      RequriedVisit: string;
-      location: string;
-    }[]
-  >([
-    {
-      description: "r.description",
-      Frequencyofoccurane: 0,
-      timeofoccurrance: "",
-      location: "r.location,",
-      id: 1,
-      RequriedVisit: "",
-    },
-  ]);
   const devices = async (SetData: (val: devicesType) => void) => {
     await axios
       .get(process.env.REACT_APP_BACK_END_API_LINK + "devices/", {
@@ -65,9 +51,36 @@ export default function UserReports() {
   };
   useEffect(() => {
     devices(setDevicesList);
-    recentOrders(setRecentOrdersData);
-    recentOrders(setRequestedOrdersData, "INITIALIZED");
+    recentOrders(setRecentOrdersData, ordersPage.page, ordersPage.perPage);
+    recentOrders(
+      setRequestedOrdersData,
+      ordersRequestsPage.page,
+      ordersRequestsPage.perPage,
+      "INITIALIZED"
+    );
   }, []);
+  useEffect(() => {
+    recentOrders(setRecentOrdersData, ordersPage.page, ordersPage.perPage);
+  }, [ordersPage]);
+  useEffect(() => {
+    recentOrders(
+      setRequestedOrdersData,
+      ordersRequestsPage.page,
+      ordersRequestsPage.perPage,
+      "INITIALIZED"
+    );
+  }, [ordersRequestsPage]);
+  useEffect(() => {
+    if (!ordersPage.count)
+      setOrdersPage({ ...ordersPage, count: recentOrdersData?.count });
+  }, [recentOrdersData]);
+  useEffect(() => {
+    if (!ordersRequestsPage.count)
+      setOrdersRequestsPage({
+        ...ordersRequestsPage,
+        count: requestedOrdersData?.count,
+      });
+  }, [requestedOrdersData]);
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -90,15 +103,23 @@ export default function UserReports() {
               technical: r?.technical?.map((t) => t.name),
             })) || []
           }
-          count={recentOrdersData?.count}
-          next={recentOrdersData?.next}
-          priv={recentOrdersData?.previous}
+          pagination={ordersPage}
+          setPagination={setOrdersPage}
         />{" "}
         <OrdersRequests
           onUpdate={() => {
             devices(setDevicesList);
-            recentOrders(setRecentOrdersData);
-            recentOrders(setRequestedOrdersData, "INITIALIZED");
+            recentOrders(
+              setRecentOrdersData,
+              ordersPage.page,
+              ordersPage.perPage
+            );
+            recentOrders(
+              setRequestedOrdersData,
+              ordersRequestsPage.page,
+              ordersRequestsPage.perPage,
+              "INITIALIZED"
+            );
           }}
           tableData={
             requestedOrdersData?.results.map((r) => ({
@@ -114,8 +135,10 @@ export default function UserReports() {
               id: r.id,
             })) || []
           }
+          pagination={ordersRequestsPage}
+          setPagination={setOrdersRequestsPage}
         />
-        <OrdersStatus
+        {/* <OrdersStatus
           tableData={rows?.map((r) => ({
             description: r.description,
             timeOfOccurrance: r.timeofoccurrance,
@@ -123,7 +146,7 @@ export default function UserReports() {
             location: r.location,
             id: r.id,
           }))}
-        />
+        /> */}
         <DevidesList tableData={devicesList?.results?.map((r) => r) || []} />
       </Flex>
     </Box>

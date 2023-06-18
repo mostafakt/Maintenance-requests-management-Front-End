@@ -33,7 +33,12 @@ export type orderType = {
     visit_date: string;
     location: string;
   }[];
-  problem_images: string[];
+  problem_images: {
+    id: string;
+    order: string;
+    comment: string;
+    image: string;
+  }[];
 };
 
 export const fetchOrder = async (id: string) => {

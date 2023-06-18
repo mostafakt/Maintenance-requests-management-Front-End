@@ -23,6 +23,7 @@ import { getUser } from "services/authManager";
 import { devices, devicesType } from "../default/services/devicesServices";
 import { fetchOrder, orderType } from "./Services/orderServer";
 import { useParams } from "react-router-dom";
+import ExpandedImage from "./Components/ExpandedImage";
 
 function ShowOrder() {
   const { id } = useParams();
@@ -322,7 +323,10 @@ function ShowOrder() {
                 </Text>
                 <Stack direction="row">
                   {orderData?.problem_images.map((i) => (
-                    <Image boxSize="100px" objectFit="cover" src={i} />
+                    <Flex direction={"column"} gap={"5px"}>
+                      <ExpandedImage link={i.image} />
+                      <Text>{i.comment}</Text>
+                    </Flex>
                   ))}
                 </Stack>
               </Card>

@@ -20,12 +20,17 @@ export type devicesType = {
     }[];
   }[];
 };
-export const devices = async (SetData: (val: devicesType) => void) => {
+export const devices = async (
+  SetData: (val: devicesType) => void,
+  page: number,
+  perPage: number
+) => {
   await axios
     .get(
       process.env.REACT_APP_BACK_END_API_LINK +
         `devices/user-devices/${getUser()}/`,
       {
+        params: { page_size: 2, page: 1 },
         headers: getHeader(),
       }
     )

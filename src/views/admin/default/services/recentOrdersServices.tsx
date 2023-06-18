@@ -31,7 +31,12 @@ export type orderType = {
     visit_date: string;
     location: string;
   }[];
-  problem_images: string[];
+  problem_images: {
+    id: string;
+    order: string;
+    comment: string;
+    image: string;
+  }[];
 };
 
 export type recentOrdersList = {
@@ -42,13 +47,15 @@ export type recentOrdersList = {
 };
 export const recentOrders = async (
   SetData: (val: recentOrdersList) => void,
+  page: number,
+  perPage: number,
   filter?: string
 ) => {
   await axios
     .get<recentOrdersList>(
       process.env.REACT_APP_BACK_END_API_LINK + "orders/",
       {
-        params: { state: filter, page: 1 },
+        params: { state: filter, page_size: perPage, page: page },
         headers: getHeader(),
       }
     )

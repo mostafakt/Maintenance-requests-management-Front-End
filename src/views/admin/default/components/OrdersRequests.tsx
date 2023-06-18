@@ -44,6 +44,7 @@ import {
   technicalList,
   technicalsListType,
 } from "views/admin/Technicals/services/technicalServices";
+import Pagination from "components/Pagination/Pagination";
 
 type RowObj = {
   id: string;
@@ -65,9 +66,21 @@ const columnHelper = createColumnHelper<RowObj>();
 function OrdersRequests({
   tableData,
   onUpdate,
+  pagination,
+  setPagination,
 }: {
   tableData: RowObj[];
   onUpdate?: () => void;
+  pagination: {
+    page: number;
+    perPage: number;
+    count: number;
+  };
+  setPagination: (val: {
+    page: number;
+    perPage: number;
+    count: number;
+  }) => void;
 }) {
   const [data, setData] = React.useState(() => [...tableData]);
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -436,6 +449,18 @@ function OrdersRequests({
               })}
           </Tbody>
         </Table>
+        <Pagination
+          currentPage={pagination.page}
+          itemsPerPage={pagination.perPage}
+          paginate={(val) => {
+            setPagination({
+              ...pagination,
+              page: val.page,
+              perPage: val.perPage,
+            });
+          }}
+          totalItems={pagination.count}
+        />
       </Box>
     </Card>
   );

@@ -68,7 +68,7 @@ function CreateOrder() {
 
   useEffect(() => {
     action.addFile(undefined);
-    devices(setDevicesListData);
+    devices(setDevicesListData, 1, 5);
     orderContactsList(setOrderContactsListData);
     return () => action.addFile(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -25,6 +25,7 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import { Link } from "react-router-dom";
+import Pagination from "components/Pagination/Pagination";
 
 type RowObj = {
   id: string;
@@ -43,11 +44,20 @@ const columnHelper = createColumnHelper<RowObj>();
 // const columns = columnsDataCheck;
 export default function ColumnTable({
   tableData,
+  pagination,
+  setPagination,
 }: {
   tableData: RowObj[];
-  count: number;
-  priv: number;
-  next: number;
+  pagination: {
+    page: number;
+    perPage: number;
+    count: number;
+  };
+  setPagination: (val: {
+    page: number;
+    perPage: number;
+    count: number;
+  }) => void;
 }) {
   const [data, setData] = React.useState(() => [...tableData]);
 
@@ -295,6 +305,18 @@ export default function ColumnTable({
               })}
           </Tbody>
         </Table>
+        <Pagination
+          currentPage={pagination.page}
+          itemsPerPage={pagination.perPage}
+          paginate={(val) => {
+            setPagination({
+              ...pagination,
+              page: val.page,
+              perPage: val.perPage,
+            });
+          }}
+          totalItems={pagination.count}
+        />
       </Box>
     </Card>
   );
